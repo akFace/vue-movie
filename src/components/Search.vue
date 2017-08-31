@@ -5,7 +5,7 @@
                 <div class="search">
                     <span class="back" @click="goback"><mu-icon value="arrow_back" color="#fff" /></span>
                     <input type="search" v-model="keyword" placeholder="输入影片名" @keyup.enter="doSearch" ref="input_dom">
-                    <span class="cancer" @click="goback">取消</span>
+                    <span class="cancer" @click="doSearch" @keyup.enter="doSearch">搜索</span>
                 </div>
             </div>
         </div>

@@ -127,7 +127,7 @@ export default {
         .item {
             width: 26%!important;
             .img {
-                height: 170px!important;
+                height: 190px!important;
             }
         }
     }
