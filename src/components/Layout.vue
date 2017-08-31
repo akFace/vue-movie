@@ -81,6 +81,7 @@ export default {
         _self = this;
     },
     mounted() {
+        // 设置手机状态栏颜色
         this.setStatusBar();
     },
     activated() {
@@ -113,7 +114,6 @@ export default {
             this.active_nav = path;
         },
         setStatusBar() {
-            console.log('设置状态栏');
             document.addEventListener("deviceready", () => {
                 console.log('设备已就绪');
                 StatusBar.backgroundColorByHexString("#7E57C2");

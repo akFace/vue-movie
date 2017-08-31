@@ -5,8 +5,8 @@ import Movie from '@/components/Movie'
 import Tv from '@/components/Tv'
 import User from '@/components/User'
 import MovieDetail from '@/components/MovieDetail'
-import TvDetail from '@/components/TvDetail'
 import Search from '@/components/Search'
+import About from '@/components/About'
 
 Vue.use(Router)
 
@@ -38,15 +38,14 @@ const routes =  [
       meta: { keepAlive: false }
     },
     {
-      path: '/tv/detail/:tv_id',
-      name: 'TvDetail',
-      component: TvDetail,
-      meta: { keepAlive: false }
-    },
-    {
       path: '/search',
       name: 'Search',
       component: Search,
+    },
+    {
+      path: '/about',
+      name: 'About',
+      component: About,
     },
   ]
 

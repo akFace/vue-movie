@@ -82,7 +82,7 @@ export default {
                 // },
                 contextmenu: [{
                         text: '版本: v1.5.0',
-                        link: 'https://github.com/DIYgod/DPlayer/issues'
+                        link: 'https://github.com/MoePlayer/DPlayer/releases'
                     }, {
                         text: 'HTML5视频播放器',
                         link: 'https://github.com/DIYgod/DPlayer'
@@ -99,7 +99,9 @@ export default {
                     _self.loading = 'loaded';
                     _self.current_src = res.src[0];
                     _self.movie = _self.initData(res);
-                    _self.initDplayer();
+                    _self.$nextTick(() => {
+                        _self.initDplayer();
+                    })
                 } else {
                     _self.loading = 'loaded';
                 }
@@ -152,33 +154,6 @@ export default {
                 padding: 15px;
                 width: 100%;
                 overflow: hidden;
-                .cover {
-                    position: relative;
-                    width: 100%;
-                    height: 300px;
-                    background-repeat: no-repeat;
-                    background-size: cover;
-                    border-radius: 6px;
-                    .icon_player {
-                        position: absolute;
-                        top: 50%;
-                        left: 50%;
-                        transform: translate(-50%, -50%);
-                        margin: auto;
-                        color: #fff;
-                        text-align: center;
-                    }
-                    .cover_bg {
-                        display: inline-block;
-                        position: absolute;
-                        top: 0;
-                        left: 0;
-                        width: 100%;
-                        height: 100%;
-                        background: rgba(0, 0, 0, 0.5);
-                    }
-                }
-                
             }
             .btn_box {
                 padding: 30px;

@@ -1,8 +1,6 @@
 <template>
     <Layout :has_share="false" title="电影">
         <div class="page_wrap">
-            <div class="page_hd">
-            </div>
             <div class="page_bd">
                 <div class="content">
                     <mu-refresh-control :refreshing="refreshing" :trigger="trigger" @refresh="refresh"/>
@@ -11,8 +9,6 @@
                     </div>
                     <mu-infinite-scroll :scroller="scroller" :loading="getLoading" @load="loadMore"/>
                 </div>
-            </div>
-            <div class="page_ft">
             </div>
         </div>
     </Layout>
@@ -113,25 +109,8 @@ export default {
         .content {
             .list {
                 text-align: center;
-                .item {
-                    display: inline-block;
-                    width: 45%;
-                    margin: 10px 5px;
-                }
             }
         }
     }
-    .page_ft {}
 }
-
-
-</style>
-<style lang="less">
-    .movie_title {
-        font-size: 18px!important;
-        line-height: 24px!important;
-        overflow: hidden;
-        text-overflow:ellipsis;
-        white-space: nowrap;
-    }
 </style>

@@ -84,7 +84,7 @@ export default {
             margin-bottom: 10px;
             width: 17%!important;
             .img {
-                height: 240px!important;
+                height: 290px!important;
             }
         }
     }
@@ -99,7 +99,7 @@ export default {
         .item {
             width: 20%!important;
             .img {
-                height: 250px!important;
+                height: 270px!important;
             }
         }
     }
@@ -145,7 +145,7 @@ export default {
         .item {
             width: 32%!important;
             .img {
-                height: 120px!important;
+                height: 140px!important;
             }
         }
         

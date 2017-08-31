@@ -189,25 +189,9 @@ export default {
         .content {
             .list {
                 text-align: center;
-                .item {
-                    display: inline-block;
-                    width: 45%;
-                    margin: 10px 5px;
-                }
             }
         }
     }
     .page_ft {}
 }
-
-
-</style>
-<style lang="less">
-    .movie_title {
-        font-size: 18px!important;
-        line-height: 24px!important;
-        overflow: hidden;
-        text-overflow:ellipsis;
-        white-space: nowrap;
-    }
 </style>

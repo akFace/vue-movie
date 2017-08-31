@@ -1,8 +1,6 @@
 <template>
     <Layout :has_share="false" title="综合">
         <div class="page_wrap">
-            <div class="page_hd">
-            </div>
             <div class="page_bd">
                 <div class="content" v-if="loading !== 'loading'">
                     <mu-refresh-control :refreshing="refreshing" :trigger="trigger" @refresh="refresh"/>
@@ -21,8 +19,6 @@
                         <div class="more" @click="jumpTv">查看更多...</div>
                     </div>
                 </div>
-            </div>
-            <div class="page_ft">
             </div>
         </div>
     </Layout>
@@ -124,11 +120,6 @@ export default {
         .content {
             .list {
                 text-align: center;
-                .item {
-                    display: inline-block;
-                    width: 45%;
-                    margin: 10px 5px;
-                }
             }
         }
         .more {
@@ -136,17 +127,5 @@ export default {
             cursor: pointer;
         }
     }
-    .page_ft {}
 }
-
-
-</style>
-<style lang="less">
-    .movie_title, .tv_title {
-        font-size: 18px!important;
-        line-height: 24px!important;
-        overflow: hidden;
-        text-overflow:ellipsis;
-        white-space: nowrap;
-    }
 </style>
