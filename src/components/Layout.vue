@@ -7,8 +7,10 @@
                         <mu-icon-button icon="menu" slot="left" v-if="has_menu" @click="openMenu" />
                         <mu-icon-button icon="arrow_back" slot="left" v-if="!has_menu" @click="goBack" />
                         <mu-icon-menu icon="more_vert" slot="right" v-if="has_share">
-                            <mu-menu-item title="分享" />
-                            <mu-menu-item title="收藏" />
+                            <slot name="bar_menu">
+                                <mu-menu-item title="分享" />
+                                <mu-menu-item title="收藏" />
+                            </slot>
                         </mu-icon-menu>
                         <mu-icon-button icon="search" slot="right"v-if="!has_share" @click="search" />
                     </mu-appbar>

@@ -141,10 +141,11 @@ export default {
                 arr = arr.filter((item) => {
                     return item.id != _self.movie.id;
                 })
+                arr.unshift(this.movie);
+                // 仅仅保留最近浏览的30个数据
                 if (arr.length >= 30) {
                     arr = arr.slice(0, 30);
                 }
-                arr.unshift(this.movie);
             } else {
                 arr = [];
                 arr.unshift(this.movie);

@@ -1,5 +1,8 @@
 <template>
     <Layout :has_menu="false" :has_footer="false" title="浏览历史">
+        <div class="menu" slot="bar_menu" >
+            <mu-menu-item title="清空收藏" @click="clearHistory" />
+        </div>
         <div class="page_wrap">
             <div class="page_hd">
             </div>
@@ -40,6 +43,10 @@ export default {
         },
         getHistory() {
             this.list = Store.get('view_list');
+        },
+        clearHistory() {
+            Store.remove('view_list');
+            this.list = [];
         },
     },
     computed: {
