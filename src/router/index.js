@@ -16,52 +16,52 @@ const routes =  [
       path: '/',
       name: 'Index',
       component: Index,
+      meta: { keepAlive: true }
     },
     {
       path: '/movie',
       name: 'Movie',
-      component: Movie
+      component: Movie,
+      meta: { keepAlive: true }
     },
     {
       path: '/tv',
       name: 'Tv',
-      component: Tv
+      component: Tv,
+      meta: { keepAlive: true }
     },
     {
       path: '/user',
       name: 'User',
       component: User,
-      meta: { keepAlive: false }
     },
     {
       path: '/movie/detail/:movie_id',
       name: 'MovieDetail',
       component: MovieDetail,
-      meta: { keepAlive: false }
     },
     {
       path: '/search',
       name: 'Search',
       component: Search,
+      meta: { keepAlive: true }
     },
     {
       path: '/about',
       name: 'About',
       component: About,
-      meta: { keepAlive: false }
     },
     {
       path: '/history',
       name: 'History',
       component: History,
-      meta: { keepAlive: false }
     }
   ]
 
-// 设置keepAlive是默认需要的
+// 设置keepAlive是默认不需要的
 for(let item of routes) {
   if (!item.meta) {
-    item.meta = { keepAlive: true }
+    item.meta = { keepAlive: false }
   }
 }
 

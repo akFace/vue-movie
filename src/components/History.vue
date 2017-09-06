@@ -70,6 +70,7 @@ export default {
                 border-bottom: 1px solid #eee;
                 background-color: #fff;
                 display: flex;
+                cursor: pointer;
                 .img {
                     width: 100px;
                     height: 60px;
