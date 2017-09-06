@@ -4,17 +4,14 @@
             <mu-menu-item title="清空收藏" @click="clearHistory" />
         </div>
         <div class="page_wrap">
-            <div class="page_hd">
-            </div>
             <div class="page_bd">
                 <div class="list">
                     <div class="item" v-for="movie in list" @click="jumpDetail(movie.id)">
                         <div class="img" :style="`background-image: url(${movie.cover})`"></div>
                         <div class="title">{{ movie.title }}</div>
                     </div>
-                </div>  
-            </div>
-            <div class="page_ft">
+                </div>
+                <div class="empty" v-if="!list.length">暂时无历史记录噢...</div>
             </div>
         </div>
     </Layout>
@@ -62,11 +59,10 @@ export default {
 <style scoped lang="less">
 @import url('../assets/less/common.less');
 .page_wrap {
-    .page_hd {}
+    height: 100%;
     .page_bd {
         height: 100%;
         background-color: #f5f5f5;
-        padding-top: 10px;
         .list {
             .item {
                 padding: 5px 10px;
@@ -88,8 +84,11 @@ export default {
                 }
             }
         }
+        .empty {
+            padding-top: 20px;
+            text-align: center;
+        }
     }
-    .page_ft {}
 }
 
 </style>
