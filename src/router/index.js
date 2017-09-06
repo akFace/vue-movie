@@ -34,6 +34,7 @@ const routes =  [
       path: '/user',
       name: 'User',
       component: User,
+      meta: { keepAlive: true }
     },
     {
       path: '/movie/detail/:movie_id',
