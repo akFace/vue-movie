@@ -34,6 +34,7 @@
 <script>
 let _self;
 import Layout from '@/components/Layout';
+import Store from 'storejs'
 
 export default {
     data: function() {
@@ -100,6 +101,7 @@ export default {
                     _self.current_src = res.src[0];
                     _self.movie = _self.initData(res);
                     _self.$nextTick(() => {
+                        _self.saveHistory();
                         _self.initDplayer();
                     })
                 } else {
@@ -132,7 +134,23 @@ export default {
                 }
             }
         },
-
+        saveHistory() {
+            let arr = [];
+            arr = Store.get('view_list');
+            if (arr) {
+                arr = arr.filter((item) => {
+                    return item.id != _self.movie.id;
+                })
+                if (arr.length >= 30) {
+                    arr = arr.slice(0, 30);
+                }
+                arr.unshift(this.movie);
+            } else {
+                arr = [];
+                arr.unshift(this.movie);
+            }
+            Store.set('view_list', arr);
+        },
     },
     computed: {
         

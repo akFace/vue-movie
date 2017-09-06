@@ -7,6 +7,7 @@ import User from '@/components/User'
 import MovieDetail from '@/components/MovieDetail'
 import Search from '@/components/Search'
 import About from '@/components/About'
+import History from '@/components/History'
 
 Vue.use(Router)
 
@@ -29,7 +30,8 @@ const routes =  [
     {
       path: '/user',
       name: 'User',
-      component: User
+      component: User,
+      meta: { keepAlive: false }
     },
     {
       path: '/movie/detail/:movie_id',
@@ -46,9 +48,17 @@ const routes =  [
       path: '/about',
       name: 'About',
       component: About,
+      meta: { keepAlive: false }
     },
+    {
+      path: '/history',
+      name: 'History',
+      component: History,
+      meta: { keepAlive: false }
+    }
   ]
 
+// 设置keepAlive是默认需要的
 for(let item of routes) {
   if (!item.meta) {
     item.meta = { keepAlive: true }

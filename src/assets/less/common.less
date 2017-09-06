@@ -1,7 +1,5 @@
 @nav_bar: 56px;
 
-
-
 @main_color: #7E57C2;
 
 
@@ -10,3 +8,19 @@
 @screen_md_min: 992px;
 @screen_lg_min: 1200px;
 @screen_mg_min: 1201px;
+
+.ellipsis(@w:auto) {
+    width: @w;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-wrap: normal;
+}
+
+.ellipsisLn(@line) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: @line;
+}

@@ -2,11 +2,7 @@
   <Layout :has_share="false">
     <div class="wrap">
         <mu-list>
-          <mu-list-item title="我的收藏">
-            <mu-icon slot="left" value="collections"/>
-            <mu-icon slot="right" value="keyboard_arrow_right"/>
-          </mu-list-item>
-          <mu-list-item title="观看历史">
+          <mu-list-item title="观看历史" to="/history">
             <mu-icon slot="left" value="history"/>
             <mu-icon slot="right" value="keyboard_arrow_right"/>
           </mu-list-item>
