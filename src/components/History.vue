@@ -39,7 +39,7 @@ export default {
             this.$router.push(`/movie/detail/${id}`)
         },
         getHistory() {
-            this.list = Store.get('view_list');
+            this.list = Store.get('view_list') || [];
         },
         clearHistory() {
             Store.remove('view_list');
