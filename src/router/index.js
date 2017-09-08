@@ -8,6 +8,7 @@ import MovieDetail from '@/components/MovieDetail'
 import Search from '@/components/Search'
 import About from '@/components/About'
 import History from '@/components/History'
+import Favorite from '@/components/Favorite'
 
 Vue.use(Router)
 
@@ -56,6 +57,11 @@ const routes =  [
       path: '/history',
       name: 'History',
       component: History,
+    },
+    {
+      path: '/favorite',
+      name: 'Favorite',
+      component: Favorite,
     }
   ]
 

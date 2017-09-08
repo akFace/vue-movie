@@ -6,6 +6,10 @@
             <mu-icon slot="left" value="history"/>
             <mu-icon slot="right" value="keyboard_arrow_right"/>
           </mu-list-item>
+          <mu-list-item title="我的收藏" to="/favorite">
+            <mu-icon slot="left" value="favorite"/>
+            <mu-icon slot="right" value="keyboard_arrow_right"/>
+          </mu-list-item>
           <mu-list-item title="关于" to="/about">
             <mu-icon slot="left" value="timeline"/>
             <mu-icon slot="right" value="keyboard_arrow_right"/>
