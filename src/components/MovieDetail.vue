@@ -1,5 +1,9 @@
 <template>
     <Layout :has_menu="false" :has_footer="false" :title="movie.title">
+        <div class="menu" slot="bar_menu" >
+            <mu-menu-item title="分享" @click="shareMovie" />
+            <mu-menu-item title="收藏" @click="saveMovie" />
+        </div>
         <div class="page_wrap">
             <div class="page_hd">
             </div>
@@ -34,6 +38,7 @@
 <script>
 let _self;
 import Layout from '@/components/Layout';
+import { Toast } from 'mint-ui';
 import Store from 'storejs'
 
 export default {
@@ -151,6 +156,28 @@ export default {
                 arr.unshift(this.movie);
             }
             Store.set('view_list', arr);
+        },
+        saveMovie() {
+            let arr = [];
+            arr = Store.get('favorite_list');
+            if (arr) {
+                arr = arr.filter((item) => {
+                    return item.id != _self.movie.id;
+                })
+                arr.unshift(this.movie);
+            } else {
+                arr = [];
+                arr.unshift(this.movie);
+            }
+            Store.set('favorite_list', arr);
+            Toast({
+              message: '已收藏',
+              position: 'bottom',
+              duration: 3000
+            });
+        },
+        shareMovie() {
+
         },
     },
     computed: {
