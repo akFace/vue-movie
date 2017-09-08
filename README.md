@@ -1,15 +1,19 @@
-## 基于vue2.0构建的在线电影网【film】，webpack+vue+vuex+keepAlive+muse-ui+cordova 全家桶，打包成APP
+### 基于vue2.0构建的在线电影网【film】，webpack+vue+vuex+keepAlive+muse-ui+cordova 全家桶，cordova 打包成APP
 
-[在线demo](http://www.66re.cn/movie)
+### [在线demo](http://www.66re.cn/movie)   
+###### apk安装包后续再放出吧 O(∩_∩)O
 
-## 屏幕截图，该项目使用了响应式布局，适配全分辨率的屏幕
-![美丽花儿](http://ww2.sinaimg.cn/large/56d258bdjw1eugeubg8ujj21kw16odn6.jpg "美丽花儿")
-
+### 屏幕截图，该项目使用了响应式布局，适配全分辨率的屏幕
+#### 移动端效果
 <figure class="half">
-    <img src="http://ww2.sinaimg.cn/large/56d258bdjw1eugeubg8ujj21kw16odn6.jpg" width="200">
-    <img src="http://ww2.sinaimg.cn/large/56d258bdjw1eugeubg8ujj21kw16odn6.jpg" width="200">
+    <img src="https://raw.githubusercontent.com/kang558/vue-movie/master/screenshot/01.png" width="400">
+    <img src="https://raw.githubusercontent.com/kang558/vue-movie/master/screenshot/03.png" width="400">
 </figure>
+#### PC端效果
+![美丽花儿](https://raw.githubusercontent.com/kang558/vue-movie/master/screenshot/pc.png "美丽花儿")
 
+
+### 目录结构
 ```
 # web目录结构
 
@@ -39,17 +43,15 @@
 
 > A Vue.js project
 
-## Build Setup
+### 运行 
 
-``` bash
-## install dependencies
+```
 npm install
 
-## serve with hot reload at localhost:8083
 npm run dev
 
-## build for production with minification
 npm run build
 
+```
 
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
