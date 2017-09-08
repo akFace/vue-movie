@@ -1,6 +1,6 @@
 ### 基于vue2.0构建的在线电影网【film】，webpack + vue + vuex + vue-loader + keepAlive + muse-ui + cordova 全家桶，cordova 打包成APP
 
-从零开始搭建，适合新手练手参考。
+从零开始搭建，适合新手练手参考。api来源于网上，仅供开发参考之用，禁用于商业，否则后果自负。
 
 ### [在线demo](http://www.66re.cn/movie)   
 ###### apk安装包后续再放出吧 O(∩_∩)O
@@ -8,8 +8,8 @@
 ### 屏幕截图，该项目使用了响应式布局，适配全分辨率的屏幕
 #### 移动端效果
 <figure class="half">
-    <img src="https://raw.githubusercontent.com/kang558/vue-movie/master/screenshot/01.png" width="350">
-    <img src="https://raw.githubusercontent.com/kang558/vue-movie/master/screenshot/03.png" width="350">
+    <img src="https://raw.githubusercontent.com/kang558/vue-movie/master/screenshot/01.png" width="400">
+    <img src="https://raw.githubusercontent.com/kang558/vue-movie/master/screenshot/03.png" width="400">
 </figure>
 
 #### PC端效果
