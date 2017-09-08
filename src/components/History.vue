@@ -1,7 +1,7 @@
 <template>
-    <Layout :has_menu="false" :has_footer="false" title="收藏夹">
+    <Layout :has_menu="false" :has_footer="false" title="观看历史">
         <div class="menu" slot="bar_menu" >
-            <mu-menu-item title="清空收藏" @click="clearHistory" />
+            <mu-menu-item title="清空观看历史" @click="clearHistory" />
         </div>
         <div class="page_wrap">
             <div class="page_bd">
@@ -14,7 +14,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="empty" v-if="!list.length">暂时无收藏噢...</div>
+                <div class="empty" v-if="!list.length">暂时无观看历史噢...</div>
             </div>
         </div>
     </Layout>
@@ -22,6 +22,7 @@
 <script>
 let _self;
 import Layout from '@/components/Layout';
+import { Toast } from 'mint-ui';
 import Store from 'storejs'
 
 export default {
@@ -47,6 +48,11 @@ export default {
         clearHistory() {
             Store.remove('view_list');
             this.list = [];
+            Toast({
+              message: '已清空观看历史',
+              position: 'bottom',
+              duration: 3000
+            });
         },
     },
     computed: {
@@ -67,6 +73,7 @@ export default {
         height: 100%;
         background-color: #f5f5f5;
         .list {
+            padding-top: 10px;
             .item {
                 padding: 5px 10px;
                 margin-bottom: 5px;

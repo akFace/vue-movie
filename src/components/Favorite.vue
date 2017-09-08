@@ -1,7 +1,7 @@
 <template>
     <Layout :has_menu="false" :has_footer="false" title="收藏夹">
         <div class="menu" slot="bar_menu" >
-            <mu-menu-item title="清空收藏" @click="clearHistory" />
+            <mu-menu-item title="清空收藏" @click="clearFavorite" />
         </div>
         <div class="page_wrap">
             <div class="page_bd">
@@ -22,6 +22,7 @@
 <script>
 let _self;
 import Layout from '@/components/Layout';
+import { Toast } from 'mint-ui';
 import Store from 'storejs'
 
 export default {
@@ -44,9 +45,14 @@ export default {
         getHistory() {
             this.list = Store.get('favorite_list') || [];
         },
-        clearHistory() {
+        clearFavorite() {
             Store.remove('favorite_list');
             this.list = [];
+            Toast({
+              message: '已清空收藏夹',
+              position: 'bottom',
+              duration: 3000
+            });
         },
     },
     computed: {
@@ -67,6 +73,7 @@ export default {
         height: 100%;
         background-color: #f5f5f5;
         .list {
+            padding-top: 10px;
             .item {
                 padding: 5px 10px;
                 margin-bottom: 5px;
