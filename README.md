@@ -10,7 +10,10 @@
     <img src="https://raw.githubusercontent.com/kang558/vue-movie/master/screenshot/03.png" width="400">
 </figure>
 #### PC端效果
-![美丽花儿](https://raw.githubusercontent.com/kang558/vue-movie/master/screenshot/pc.png "美丽花儿")
+
+<figure class="center">
+    <img src="https://raw.githubusercontent.com/kang558/vue-movie/master/screenshot/pc.png">
+</figure>
 
 
 ### 目录结构
