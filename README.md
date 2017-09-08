@@ -1,4 +1,4 @@
-### 基于vue2.0构建的在线电影网【film】，webpack+vue+vuex+keepAlive+muse-ui+cordova 全家桶，cordova 打包成APP
+### 基于vue2.0构建的在线电影网【film】，webpack + vue + vuex + vue-loader + keepAlive + muse-ui + cordova 全家桶，cordova 打包成APP
 
 从零开始搭建，适合新手练手参考。
 
@@ -24,7 +24,8 @@
 3. 无限加载
 4. 浏览历史
 5. 响应式布局
-6. 后续添加其他功能...
+6. 缓存网页
+7. 开发中...
 
 ### 目录结构
 ```
