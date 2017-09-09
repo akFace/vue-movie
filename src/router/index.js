@@ -9,6 +9,7 @@ import Search from '@/components/Search'
 import About from '@/components/About'
 import History from '@/components/History'
 import Favorite from '@/components/Favorite'
+import Settings from '@/components/Settings'
 
 Vue.use(Router)
 
@@ -62,6 +63,11 @@ const routes =  [
       path: '/favorite',
       name: 'Favorite',
       component: Favorite,
+    },
+    {
+      path: '/settings',
+      name: 'Settings',
+      component: Settings,
     }
   ]
 

@@ -59,8 +59,8 @@ export default {
                         _self.movies.push(...res.movies);
                         _self.tvs.push(...res.tvs);
                     } else {
-                        _self.movies = res.movies;
-                        _self.tvs = res.tvs;
+                        _self.movies = res.movies.slice(0, res.movies.length-1);
+                        _self.tvs = res.tvs.slice(0, res.tvs.length-1);
                     }
                 } else {
                     _self.loading = 'error';
@@ -107,6 +107,7 @@ export default {
     .page_hd {}
     .page_bd {
         // padding-top: @nav_bar/3;
+        padding-bottom: @nav_bar;
         .title {
             margin: 10px 0;
             text-align: left;

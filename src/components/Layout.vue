@@ -4,7 +4,7 @@
             <slot name="header">
                 <template>
                     <mu-appbar :title="title">
-                        <mu-icon-button icon="menu" slot="left" v-if="has_menu" @click="openMenu" />
+                        <mu-icon-button icon="menu" slot="left" v-if="has_menu && layout_type" @click="openMenu" />
                         <mu-icon-button icon="arrow_back" slot="left" v-if="!has_menu" @click="goBack" />
                         <mu-icon-menu icon="more_vert" slot="right" v-if="has_share">
                             <slot name="bar_menu">
@@ -17,10 +17,22 @@
                 </template>
             </slot>
         </div>
+        <div class="side" v-if="has_menu && layout_type">
+            <mu-drawer :docked="docked" :open="open" @close="openMenu()">
+                <div class="img_box">
+                    
+                </div>
+              <mu-list>
+                <mu-list-item :title="nav.title" :to="nav.value" v-for="nav in bottom_nav" :key="nav.title"  @click="openMenu()">
+                    <mu-icon slot="left" :value="nav.icon"/>
+                  </mu-list-item>
+              </mu-list>
+            </mu-drawer>
+        </div>
         <div class="content_wrap">
             <slot></slot>
         </div>
-        <div class="footer_wrap" v-if="has_footer">
+        <div class="footer_wrap" v-if="has_footer && !layout_type">
             <template>
                 <mu-paper>
                     <mu-bottom-nav :value="active_nav" @change="handleChange">
@@ -34,6 +46,7 @@
 <script>
 let _self;
 import Layout from '@/components/Layout';
+import Store from 'storejs'
 
 export default {
     data: function() {
@@ -56,6 +69,9 @@ export default {
                 value: '/user',
                 icon: 'favorite'
             }],
+            open: false,
+            docked: false,
+            layout_type: false,
         };
     },
     props: {
@@ -88,10 +104,11 @@ export default {
     },
     activated() {
         this.setActiveNav();
+        this.getModSwitch();
     },
     methods: {
         openMenu() {
-
+            this.open = !this.open;
         },
         search() {
             this.$router.push('/search')
@@ -121,6 +138,10 @@ export default {
                 StatusBar.backgroundColorByHexString("#7E57C2");
             }, false);
         },
+        getModSwitch() {
+            let a = Store.get('mod_switch') || false;
+            this.layout_type = a;
+        },
     },
     computed: {
 
@@ -143,6 +164,14 @@ export default {
         right: 0;
         width: 100%;
         z-index: 999;
+    }
+    .side {
+        .img_box {
+            height: 170px;
+            background-image: url(../assets/images/bg.png);
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
     }
     .content_wrap {
         height: 100%;

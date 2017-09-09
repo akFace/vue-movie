@@ -4,6 +4,7 @@ import actions from './api';
 
 import user from './modules/user.js';
 import modal from './modules/modal.js';
+import settings from './modules/settings.js';
 
 const debug = process.env.NODE_ENV !== 'production';
 
@@ -16,6 +17,7 @@ export default new Vuex.Store({
     modules: {
     	user,
     	modal,
+    	settings,
     },
     strict: debug,
 });

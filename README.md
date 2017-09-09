@@ -6,10 +6,14 @@
 ###### apk安装包后续再放出吧 O(∩_∩)O
 
 ### 屏幕截图，该项目使用了响应式布局，适配全分辨率的屏幕
-#### 移动端效果
+#### 移动端效果（非侧边栏模式）
 <figure class="half">
     <img src="https://raw.githubusercontent.com/kang558/vue-movie/master/screenshot/01.png" width="400">
     <img src="https://raw.githubusercontent.com/kang558/vue-movie/master/screenshot/03.png" width="400">
+</figure>
+### 启用侧边栏模式
+<figure class="center">
+    <img src="https://raw.githubusercontent.com/kang558/vue-movie/master/screenshot/04.png" width="400">
 </figure>
 
 #### PC端效果
@@ -24,8 +28,11 @@
 3. 无限加载
 4. 浏览历史
 5. 响应式布局
-6. 缓存网页
-7. 开发中...
+6. 缓存数据
+8. 收藏
+9. 视频播放
+10. md风格模式
+11. 开发中...
 
 ### 目录结构
 ```
