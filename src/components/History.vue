@@ -5,6 +5,7 @@
         </div>
         <div class="page_wrap">
             <div class="page_bd">
+                <h5 class="title">仅显示最近浏览的30条数据</h5>
                 <div class="list">
                     <div class="item" v-for="movie in list" @click="jumpDetail(movie.id)">
                         <div class="img" :style="`background-image: url(${movie.cover})`"></div>
@@ -72,6 +73,11 @@ export default {
     .page_bd {
         height: 100%;
         background-color: #f5f5f5;
+        .title {
+            padding: 10px 0 0 5px;
+            font-size: 12px;
+            color: #999;
+        }
         .list {
             padding-top: 10px;
             .item {
