@@ -1,12 +1,16 @@
 <template>
-    <Layout :has_menu="false" :has_footer="false" title="收藏夹">
+    <Layout class="favorite" :has_menu="false" :has_footer="false" title="收藏夹">
         <div class="menu" slot="bar_menu" >
             <mu-menu-item title="清空收藏" @click="clearFavorite" />
         </div>
         <div class="page_wrap">
             <div class="page_bd">
                 <div class="list">
-                    <div class="item" v-for="movie in list" @click="jumpDetail(movie.id)">
+                    <div class="item" v-for="movie in list" 
+                            @click="jumpDetail(movie.id)" 
+                            @touchstart='touchStart(movie)'
+                            @touchmove='touchMove(movie)'
+                            @touchend='touchEnd(movie)'>
                         <div class="img" :style="`background-image: url(${movie.cover})`"></div>
                         <div class="box">
                             <div class="tag" :class="`tag${movie.tag}`">{{ movie.tag | getType }}</div>
@@ -16,6 +20,11 @@
                 </div>
                 <div class="empty" v-if="!list.length">暂时无收藏噢...</div>
             </div>
+            <mu-dialog class="dialog" :open="dialog" title="确定删除" @close="close">
+                {{ tuch_item.title }}
+                <mu-flat-button slot="actions" @click="close" primary label="取消"/>
+                <mu-flat-button slot="actions" primary @click="confirm" label="确定"/>
+              </mu-dialog>
         </div>
     </Layout>
 </template>
@@ -29,6 +38,9 @@ export default {
     data: function() {
         return {
             list: [],
+            timeOutEvent: 0,
+            tuch_item: {},
+            dialog: false,
         };
     },
     created() {
@@ -54,6 +66,36 @@ export default {
               duration: 3000
             });
         },
+        touchStart(movie) {
+            this.tuch_item = movie;
+            this.timeOutEvent = setTimeout(this.longPress,500);
+            // e.preventDefault();
+        },
+        touchMove(movie) {
+            clearTimeout(this.timeOutEvent); 
+                this.timeOutEvent = 0; 
+        },
+        touchEnd(movie) {
+            clearTimeout(this.timeOutEvent);
+            if(this.timeOutEvent!=0){ 
+                // alert("你这是点击，不是长按"); 
+            } 
+            return false; 
+        },
+        longPress() {
+            this.timeOutEvent = 0;
+            this.dialog = true;
+        },
+        close() {
+            this.dialog = false;
+        },
+        confirm() {
+            this.dialog = false;
+            this.list = this.list.filter((item) => {
+                return this.tuch_item.id !== item.id;
+            });
+            Store.set('favorite_list', this.list);
+        },
     },
     computed: {
         
@@ -69,8 +111,14 @@ export default {
 @import url('../assets/less/common.less');
 .page_wrap {
     height: 100%;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+    -khtml-user-select: none; /* Konqueror */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+    not supported by any browser */
     .page_bd {
-        height: 100%;
         background-color: #f5f5f5;
         .list {
             padding-top: 10px;
@@ -81,16 +129,37 @@ export default {
                 background-color: #fff;
                 display: flex;
                 cursor: pointer;
+                -webkit-touch-callout: none; /* iOS Safari */
+                -webkit-user-select: none; /* Chrome/Safari/Opera */
+                -khtml-user-select: none; /* Konqueror */
+                -moz-user-select: none; /* Firefox */
+                -ms-user-select: none; /* Internet Explorer/Edge */
+                user-select: none; /* Non-prefixed version, currently
+                not supported by any browser */
                 .img {
                     width: 100px;
                     height: 60px;
                     background-repeat: no-repeat;
                     background-size: 100%;
+                    -webkit-touch-callout: none; /* iOS Safari */
+                    -webkit-user-select: none; /* Chrome/Safari/Opera */
+                    -khtml-user-select: none; /* Konqueror */
+                    -moz-user-select: none; /* Firefox */
+                    -ms-user-select: none; /* Internet Explorer/Edge */
+                    user-select: none; /* Non-prefixed version, currently
+                    not supported by any browser */
                 }
                 .box {
                     flex: 1;
                     padding-top: 5px;
                     padding-left: 10px;
+                    -webkit-touch-callout: none; /* iOS Safari */
+                    -webkit-user-select: none; /* Chrome/Safari/Opera */
+                    -khtml-user-select: none; /* Konqueror */
+                    -moz-user-select: none; /* Firefox */
+                    -ms-user-select: none; /* Internet Explorer/Edge */
+                    user-select: none; /* Non-prefixed version, currently
+                not supported by any browser */
                     .title {
                         .ellipsisLn(2);
                     }
@@ -116,6 +185,23 @@ export default {
             text-align: center;
         }
     }
+    .dialog {
+        -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-user-select: none; /* Chrome/Safari/Opera */
+        -khtml-user-select: none; /* Konqueror */
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+        user-select: none; /* Non-prefixed version, currently
+                not supported by any browser */
+    }
 }
 
+</style>
+<style lang="less">
+    .favorite {
+        .content_wrap {
+            height: 100%;
+            background: #f5f5f5;
+        }
+    }
 </style>

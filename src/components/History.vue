@@ -1,5 +1,5 @@
 <template>
-    <Layout :has_menu="false" :has_footer="false" title="观看历史">
+    <Layout class="history" :has_menu="false" :has_footer="false" title="观看历史">
         <div class="menu" slot="bar_menu" >
             <mu-menu-item title="清空观看历史" @click="clearHistory" />
         </div>
@@ -71,7 +71,6 @@ export default {
 .page_wrap {
     height: 100%;
     .page_bd {
-        height: 100%;
         background-color: #f5f5f5;
         .title {
             padding: 10px 0 0 5px;
@@ -98,6 +97,7 @@ export default {
                     padding-top: 5px;
                     padding-left: 10px;
                     .title {
+                        padding: 0;
                         .ellipsisLn(2);
                     }
                     .tag {
@@ -124,4 +124,12 @@ export default {
     }
 }
 
+</style>
+
+<style lang="less">
+    .history {
+        .content_wrap {
+            background: #f5f5f5;
+        }
+    }
 </style>

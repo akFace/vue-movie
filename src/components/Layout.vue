@@ -19,7 +19,7 @@
         </div>
         <div class="side" v-if="has_menu && layout_type">
             <mu-drawer :docked="docked" :open="open" @close="openMenu()">
-                <div class="img_box">
+                <div class="img_box" :style="`background-image: url(${bg})`">
                     
                 </div>
               <mu-list>
@@ -47,10 +47,12 @@
 let _self;
 import Layout from '@/components/Layout';
 import Store from 'storejs'
+import bg from '../assets/images/bg.png'
 
 export default {
     data: function() {
         return {
+            bg,
             active_nav: '/',
             bottom_nav: [{
                 title: '首页',
@@ -168,13 +170,11 @@ export default {
     .side {
         .img_box {
             height: 170px;
-            background-image: url(../assets/images/bg.png);
             background-repeat: no-repeat;
             background-size: cover;
         }
     }
     .content_wrap {
-        height: 100%;
         padding: 56px 0 50px 0;
         // background: #f5f5f5;
     }
