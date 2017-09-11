@@ -9,8 +9,8 @@
                     <div class="item" v-for="movie in list" 
                             @click="jumpDetail(movie.id)" 
                             @touchstart='touchStart(movie)'
-                            @touchmove='touchMove(movie)'
-                            @touchend='touchEnd(movie)'>
+                            @touchmove='touchMove'
+                            @touchend='touchEnd'>
                         <div class="img" :style="`background-image: url(${movie.cover})`"></div>
                         <div class="box">
                             <div class="tag" :class="`tag${movie.tag}`">{{ movie.tag | getType }}</div>
@@ -71,11 +71,11 @@ export default {
             this.timeOutEvent = setTimeout(this.longPress,500);
             // e.preventDefault();
         },
-        touchMove(movie) {
+        touchMove() {
             clearTimeout(this.timeOutEvent); 
                 this.timeOutEvent = 0; 
         },
-        touchEnd(movie) {
+        touchEnd() {
             clearTimeout(this.timeOutEvent);
             if(this.timeOutEvent!=0){ 
                 // alert("你这是点击，不是长按"); 
@@ -83,6 +83,7 @@ export default {
             return false; 
         },
         longPress() {
+            // 长按触发
             this.timeOutEvent = 0;
             this.dialog = true;
         },
