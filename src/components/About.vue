@@ -1,7 +1,9 @@
 <template>
   <Layout :has_menu="false" :has_footer="false" title="关于我">
     <div class="wrap">
-        <h5>最新最好看的电影APP v1.0.1</h5>
+        <h4>基于vue2.0开发</h4>
+        <h5>最新最好看的电影APP</h5>
+        <h6>开源项目：<a href="https://github.com/kang558/vue-movie">GitHub</a></h6>
     </div>
   </Layout>
 </template>
