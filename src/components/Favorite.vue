@@ -6,7 +6,7 @@
         <div class="page_wrap">
             <div class="page_bd">
                 <div class="list">
-                    <div class="item" v-for="movie in list" 
+                    <div class="item" v-for="movie in list" :key="movie.id"
                             @click="jumpDetail(movie.id)" 
                             @touchstart='touchStart(movie)'
                             @touchmove='touchMove'
