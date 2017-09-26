@@ -1,12 +1,15 @@
 const state = {
-    mod_switch: false,
+    router_direction: '',
 }
 
 // mutations
 const mutations = {
     
-    'SET_MOD_SWITCH' (state, mod_switch) {
-        state.mod_switch = mod_switch;
+    'SET_ROUTER_DIRECTION' (state, router_direction) {
+        state.router_direction = router_direction;
+    },
+    'UPDATA_ROUTER_DIRECTION' (state, router_direction) {
+        state.router_direction = router_direction;
     },
 }
 

@@ -51,22 +51,22 @@ const routes =  [
       meta: { keepAlive: true }
     },
     {
-      path: '/about',
+      path: '/user/about',
       name: 'About',
       component: About,
     },
     {
-      path: '/history',
+      path: '/user/history',
       name: 'History',
       component: History,
     },
     {
-      path: '/favorite',
+      path: '/user/favorite',
       name: 'Favorite',
       component: Favorite,
     },
     {
-      path: '/settings',
+      path: '/user/settings',
       name: 'Settings',
       component: Settings,
     },
