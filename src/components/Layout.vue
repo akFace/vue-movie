@@ -113,7 +113,7 @@ export default {
             this.open = !this.open;
         },
         search() {
-            this.$router.push('/search')
+            this.$router.push('/all/search')
         },
         goBack() {
             if (this.leftAction) {

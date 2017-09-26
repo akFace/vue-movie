@@ -38,17 +38,17 @@ export default {
     '$route' (to, from) {
       const toDepth = to.path.split('/').length
       const fromDepth = from.path.split('/').length
-      this.transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left'
+      // this.transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left'
       // console.log('toDepth: '+ toDepth + '\n fromDepth: ' + fromDepth);
-      // if (toDepth === fromDepth) {
-      //   this.transitionName = '';
-      // }
-      // if (toDepth < fromDepth) {
-      //   this.transitionName = 'slide-right';
-      // }
-      // if (toDepth > fromDepth) {
-      //   this.transitionName = 'slide-left';
-      // }
+      if (toDepth === fromDepth) {
+        this.transitionName = '';
+      }
+      if (toDepth < fromDepth) {
+        this.transitionName = 'slide-right';
+      }
+      if (toDepth > fromDepth) {
+        this.transitionName = 'slide-left';
+      }
     }
   },
   created() {

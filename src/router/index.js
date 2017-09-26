@@ -45,7 +45,7 @@ const routes =  [
       component: MovieDetail,
     },
     {
-      path: '/search',
+      path: '/all/search',
       name: 'Search',
       component: Search,
       meta: { keepAlive: true }

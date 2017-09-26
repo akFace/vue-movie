@@ -141,7 +141,7 @@ export default {
             top: 0;
             left: 0;
             right: 0;
-            background: @main_color;
+            background: linear-gradient(to right, rgba(0, 88, 255, 0.5) 0%, rgba(0, 0, 255, 0.5) 100%);
             z-index: 999;
             .search {
                 display: flex;
