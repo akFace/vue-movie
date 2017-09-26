@@ -3,7 +3,7 @@
         <div class="page_wrap">
             <div class="page_bd">
                 <div class="content" v-if="loading !== 'loading'">
-                    <mu-refresh-control :refreshing="refreshing" :trigger="trigger" @refresh="refresh"/>
+                    <mu-refresh-control :refreshing="refreshing" :trigger="trigger" @refresh="refresh" />
                     <div class="list">
                         <div class="title">
                             <h4 class="type">电影</h4>
@@ -59,8 +59,8 @@ export default {
                         _self.movies.push(...res.movies);
                         _self.tvs.push(...res.tvs);
                     } else {
-                        _self.movies = res.movies.slice(0, res.movies.length-1);
-                        _self.tvs = res.tvs.slice(0, res.tvs.length-1);
+                        _self.movies = res.movies.slice(0, res.movies.length - 1);
+                        _self.tvs = res.tvs.slice(0, res.tvs.length - 1);
                     }
                 } else {
                     _self.loading = 'error';
@@ -112,7 +112,7 @@ export default {
             margin: 10px 0;
             text-align: left;
             border-bottom: 1px solid #eee;
-            
+
             .type {
                 padding: 10px;
                 background: #fff;
@@ -129,4 +129,5 @@ export default {
         }
     }
 }
+
 </style>
