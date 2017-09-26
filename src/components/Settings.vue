@@ -14,8 +14,7 @@
           <span v-for="(item, i) in themes" @click="changeTheme(i)">
                 <mu-paper class="themes_paper" circle :zDepth="1" :class="`themes_${i}`"></mu-paper>
             </span>
-          <mu-flat-button slot="actions" @click="closeDialog" primary label="取消" />
-          <mu-flat-button label="确定" slot="actions" primary @click="confirmDialog" />
+          <mu-flat-button slot="actions" @click="closeDialog" primary label="关闭" />
         </mu-dialog>
       </div>
     </div>
@@ -27,10 +26,11 @@ import Layout from '@/components/Layout';
 import { Toast } from 'mint-ui';
 import Store from 'storejs'
 
-import light from 'muse-ui/dist/theme-default.css'
-import dark from 'muse-ui/dist/theme-dark.css'
-import carbon from 'muse-ui/dist/theme-carbon.css'
-import teal from 'muse-ui/dist/theme-teal.css'
+import def from '!raw-loader!muse-ui/dist/theme-default.css';
+import light from '!raw-loader!muse-ui/dist/theme-light.css';
+import dark from '!raw-loader!muse-ui/dist/theme-dark.css';
+import carbon from '!raw-loader!muse-ui/dist/theme-carbon.css';
+import teal from '!raw-loader!muse-ui/dist/theme-teal.css';
 
 export default {
   data: function() {
@@ -39,6 +39,7 @@ export default {
       dialog: false,
       theme: 'light',
       themes: {
+        def,
         light,
         dark,
         carbon,
@@ -49,7 +50,6 @@ export default {
   created() {
     _self = this;
     this.getModSwitch();
-    console.log(this.themes);
   },
   methods: {
     modSwitch(val) {
@@ -62,17 +62,14 @@ export default {
     setTheme() {
       this.dialog = true;
     },
-    confirmDialog() {
-      this.closeDialog();
-    },
     closeDialog() {
       this.dialog = false;
     },
     changeTheme(theme) {
       this.theme = theme;
       const styleEl = this.getThemeStyle();
-      console.log(this.themes[theme]);
-      styleEl.innerHTML = this.themes[theme] || ''
+      styleEl.innerHTML = this.themes[theme] || '';
+      Store.set('theme', theme);
     },
     getThemeStyle() {
       const themeId = 'muse-theme'
@@ -122,20 +119,23 @@ export default {
   height: 20px;
 }
 
+.themes_def {
+  background: #7e57c2!important;
+}
 .themes_light {
-  background: #2196f3;
+  background: #2196f3!important;
 }
 
 .themes_dark {
-  background: #424242;
+  background: #424242!important;
 }
 
 .themes_carbon {
-  background: #474a4f;
+  background: #474a4f!important;
 }
 
 .themes_teal {
-  background: #009688;
+  background: #009688!important;
 }
 
 </style>
