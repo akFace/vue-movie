@@ -9,7 +9,7 @@
 #### 移动端效果（非侧边栏模式）
 <figure class="half">
     <img src="https://raw.githubusercontent.com/kang558/vue-movie/master/screenshot/01.png" width="400">
-    <img src="https://raw.githubusercontent.com/kang558/vue-movie/master/screenshot/03.png" width="400">
+    <img src="https://raw.githubusercontent.com/kang558/vue-movie/master/screenshot/movie.gif" width="400">
 </figure>
 
 #### 启用侧边栏模式
