@@ -107,6 +107,7 @@ export default {
     .page_bd {
         padding-top: @nav_bar/3;
         .content {
+            position: relative;
             .list {
                 text-align: center;
             }

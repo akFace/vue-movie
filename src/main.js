@@ -7,7 +7,7 @@ import store from './vuex/store'
 import MuseUI from 'muse-ui' 
 import 'muse-ui/dist/muse-ui.css'
 
-import Fastclick from 'fastclick'
+// import Fastclick from 'fastclick'
 import Store from 'storejs'
 
 import filters from './filters.js';

@@ -119,6 +119,7 @@ export default {
             }
         }
         .content {
+            position: relative;
             .list {
                 text-align: center;
             }
