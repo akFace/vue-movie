@@ -77,14 +77,6 @@ const routes =  [
     }
   ]
 
-// 设置keepAlive是默认不需要的
-for(let item of routes) {
-  if (!item.meta) {
-    item.meta = { keepAlive: false }
-  }
-}
-
-
 
 // scrollBehavior:
 // - only available in html5 history mode

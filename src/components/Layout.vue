@@ -9,7 +9,7 @@
                         <mu-icon-menu icon="more_vert" slot="right" v-if="has_share">
                             <slot name="bar_menu">
                                 <mu-menu-item title="分享" />
-                                <mu-menu-item title="收藏" />
+                                <mu-menu-item to="/user/favorite" title="我的收藏" />
                             </slot>
                         </mu-icon-menu>
                         <mu-icon-button icon="search" slot="right"v-if="!has_share" @click="search" />

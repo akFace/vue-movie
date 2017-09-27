@@ -1,5 +1,5 @@
 <template>
-  <Layout :has_menu="false" :has_footer="false" :has_share="false" title="设置">
+  <Layout :has_menu="false" :has_footer="false" title="设置">
     <div class="page_wrap">
       <div class="page_bd">
         <mu-list>
