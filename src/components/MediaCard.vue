@@ -45,6 +45,7 @@ export default {
     padding: 0;
     margin: auto;
     .item {
+        position: relative;
         display: inline-block;
         margin: 0 2px;
         margin-bottom: .8em;
@@ -53,8 +54,12 @@ export default {
         -moz-page-break-inside: avoid;
         -webkit-column-break-inside: avoid;
         break-inside: avoid;
+        transition: 0.5s;
+        &:hover {
+            box-shadow: 0 0 16px #999;
+        }
         .default_bg {
-            background: url(../assets/images/default.jpg) no-repeat;
+            background: url(../assets/images/default.jpeg) no-repeat;
             background-size: 100%;
         }
         .img {
