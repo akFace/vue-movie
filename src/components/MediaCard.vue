@@ -3,7 +3,9 @@
         <div class="item" v-for="media in media" :key="media.id" @click="jumpDetail(media.id)">
             <mu-card>
                 <mu-card-media>
-                    <div :style="`background-image: url(${media.cover})`" class="img"></div>
+                    <div class="default_bg">
+                        <div :style="`background-image: url(${media.cover})`" class="img"></div>
+                    </div>
                 </mu-card-media>
                 <mu-card-title titleClass="media_title" :title="media.title" subTitle="" />
             </mu-card>
@@ -51,6 +53,10 @@ export default {
         -moz-page-break-inside: avoid;
         -webkit-column-break-inside: avoid;
         break-inside: avoid;
+        .default_bg {
+            background: url(../assets/images/default.jpg) no-repeat;
+            background-size: 100%;
+        }
         .img {
             height: 110px;
             background-repeat: no-repeat;
@@ -84,7 +90,7 @@ export default {
             margin-bottom: 10px;
             width: 17%!important;
             .img {
-                height: 290px!important;
+                height: 310px!important;
             }
         }
     }
@@ -99,7 +105,7 @@ export default {
         .item {
             width: 20%!important;
             .img {
-                height: 270px!important;
+                height: 290px!important;
             }
         }
     }
@@ -113,7 +119,7 @@ export default {
         .item {
             width: 24%!important;
             .img {
-                height: 270px!important;
+                height: 280px!important;
             }
         }
     }
@@ -127,19 +133,29 @@ export default {
         .item {
             width: 26%!important;
             .img {
-                height: 190px!important;
+                height: 250px!important;
             }
         }
     }
 }
 
 
-
-
-
 /* 小屏幕（手机，大于等于 640px） */
 
 @media (max-width: @screen_mi_min) {
+    .card_wrap {
+        padding: 0 5px!important;
+        .item {
+            width: 32%!important;
+            .img {
+                height: 240px!important;
+            }
+        }
+        
+    }
+}
+
+@media (max-width: 510px) {
     .card_wrap {
         padding: 0 5px!important;
         .item {
