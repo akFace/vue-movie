@@ -95,7 +95,7 @@ export default {
             margin-bottom: 10px;
             width: 17%!important;
             .img {
-                height: 310px!important;
+                height: 305px!important;
             }
         }
     }

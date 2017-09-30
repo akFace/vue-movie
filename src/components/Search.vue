@@ -57,6 +57,16 @@ export default {
     deactivated() {
         this.scroller = null;
     },
+    beforeRouteEnter (to, from, next) {
+        if (from.name !== 'MovieDetail') {
+            next(vm => {
+                // vm.inputFocus();
+                vm.resetData();
+            });
+        } else {
+            next();
+        }
+    },
     methods: {
         doSearch() {
             if (this.keyword.replace(/\s+/g, "").length == 0 ) {
@@ -71,6 +81,11 @@ export default {
             this.loading = 'init';
             this.movies = [];
             this.tvs = [];
+        },
+        inputFocus() {
+            this.$nextTick(() => {
+                this.$refs.input_dom.focus();
+            })
         },
         getSearch() {
             let params = {};
