@@ -106,11 +106,12 @@ export default {
   },
   mounted() {
     // 设置手机状态栏颜色
-    this.setStatusBar();
+    // this.setStatusBar();
   },
   activated() {
     this.setActiveNav();
     this.getModSwitch();
+    this.setStatusBar();
   },
   methods: {
     openMenu() {
