@@ -139,9 +139,26 @@ export default {
       this.active_nav = path;
     },
     setStatusBar() {
+      let theme = Store.get('theme') || '';
+      let theme_color = '#7E57C2';
+      if (theme === 'def') {
+        theme_color = '#7E57C2'
+      }
+      if (theme === 'light') {
+        theme_color = '#2196f3'
+      }
+      if (theme === 'dark') {
+        theme_color === '#424242'
+      }
+      if (theme === 'carbon') {
+        theme_color = '#474a4f'
+      }
+      if (theme === 'teal') {
+        theme_color = '#009688'
+      }
       document.addEventListener("deviceready", () => {
         console.log('设备已就绪');
-        StatusBar.backgroundColorByHexString("#7E57C2");
+        StatusBar.backgroundColorByHexString(theme_color);
       }, false);
     },
     getModSwitch() {
@@ -184,7 +201,7 @@ export default {
       }, false);
     },
     closeDialog() {
-        this.dialog = false;
+      this.dialog = false;
     },
   },
   computed: {
