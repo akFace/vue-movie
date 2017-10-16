@@ -128,7 +128,7 @@ router.beforeEach((to, from, next) => {
     console.log(from);
     // 判断配置的路由中是否存在needLogin存在则做出对应的判断
     if (to.matched.some(record => record.meta.needLogin)) {
-        // 从状态管理器中获取登录状态，如果未登录过的跳转至登录页
+        // 从状态管理器（vuex）中获取登录状态，如果未登录过的跳转至登录页
         if (!store.state.user.is_login) {
             next({
                 path: '/user/login',
