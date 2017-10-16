@@ -11,6 +11,8 @@ Vue.http.options.crossOrigin = true;
 Vue.http.options.timeout = 30 * 1000;
 Vue.http.options.xhr = { withCredentials: true };
 Vue.http.options.root = API_ROOT; // api地址请求前缀
+
+// 全局路由拦截
 Vue.http.interceptors.push(function(request, next) {
     request.params = request.params || {};
     let version_code = store.state.user.version_code
@@ -22,7 +24,9 @@ Vue.http.interceptors.push(function(request, next) {
             if (response.status === 200) {
                 // 正常返回
             } else if (response.data.error === 1) {
-                // 需要登录
+                // 假设该请求后端返回错误代码为1是需要登录的，则跳转至登录页面
+                let {fullPath} = store.state.route;
+                router.push({path: '/user/login', query: {redirect: fullPath}});
             } else if (response.data.error === 4) {
                 // 参数错误
                 // alert(response.data.message);

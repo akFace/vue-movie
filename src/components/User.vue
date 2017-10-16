@@ -18,6 +18,15 @@
             <mu-icon slot="left" value="timeline"/>
             <mu-icon slot="right" value="keyboard_arrow_right"/>
           </mu-list-item>
+          <mu-list-item title="登录" to="user/login">
+            <mu-icon slot="left" value="timeline"/>
+            <mu-icon slot="right" value="keyboard_arrow_right"/>
+          </mu-list-item>
+        </mu-list>
+          <mu-list-item title="测试" to="user/test">
+            <mu-icon slot="left" value="timeline"/>
+            <mu-icon slot="right" value="keyboard_arrow_right"/>
+          </mu-list-item>
         </mu-list>
     </div>
   </Layout>

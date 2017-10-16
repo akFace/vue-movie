@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '@/vuex/store';
+
 import Index from '@/components/Index'
 import Movie from '@/components/Movie'
 import Tv from '@/components/Tv'
@@ -10,6 +12,7 @@ import About from '@/components/About'
 import History from '@/components/History'
 import Favorite from '@/components/Favorite'
 import Settings from '@/components/Settings'
+import Login from '@/components/login'
 import test from '@/components/test'
 
 Vue.use(VueRouter)
@@ -71,9 +74,16 @@ const routes =  [
       component: Settings,
     },
     {
-      path: '/test',
+      path: '/user/test',
       name: 'test',
       component: test,
+      // 该页面必须登录才能访问
+      meta: { needLogin: true }
+    },
+    {
+      path: '/user/login',
+      name: 'Login',
+      component: Login,
     }
   ]
 
@@ -113,5 +123,23 @@ const router = new VueRouter({
   routes: routes
 })
 
+
+router.beforeEach((to, from, next) => {
+    console.log(from);
+    // 判断配置的路由中是否存在needLogin存在则做出对应的判断
+    if (to.matched.some(record => record.meta.needLogin)) {
+        // 从状态管理器中获取登录状态，如果未登录过的跳转至登录页
+        if (!store.state.user.is_login) {
+            next({
+                path: '/user/login',
+            });
+        } else {
+          // 如果已经登录了的就可以访问该页面
+            next();
+        }
+    } else {
+        next();
+    }
+});
 
 export default router

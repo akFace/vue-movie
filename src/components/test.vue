@@ -1,12 +1,14 @@
 <template>
   <div class="wrap">
+    测试，左划删除
     <div class="delete">
       <div class="slider">
         <div class="content" @touchstart='touchStart' @touchmove='touchMove' @touchend='touchEnd' :style="deleteSlider">
           <!-- 插槽中放具体项目中需要内容         -->
+          列表
           <slot></slot>
         </div>
-        <div class="remove" ref='remove'>
+        <div class="remove" ref='remove' @click="deleteEvent">
           删除
         </div>
       </div>
@@ -83,7 +85,10 @@ export default {
           this.deleteSlider = "transform:translateX(-" + wd + "px)";
         }
       }
-    }
+    },
+    deleteEvent() {
+      alert('您点击了删除！')
+    },
   }
 
 };
@@ -109,7 +114,7 @@ export default {
     }
     .remove {
       position: absolute;
-      width: 200px;
+      width: 120px;
       height: 3rem;
       background: red;
       right: 0;
