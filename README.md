@@ -3,7 +3,7 @@
 从零开始搭建，适合新手练手参考。api来源于网上，仅供开发参考之用，禁用于商业，否则后果自负。
 
 ### [在线demo](http://www.66re.cn/movie)   
-###### apk安装包后续再放出吧，功能已经完善差不多了，过两天放出apk O(∩_∩)O
+###### apk安装包 [android-x86-debug.apk](http://oemc3y518.bkt.clouddn.com/android-x86-debug.apk)  [android-armv7-debug](http://oemc3y518.bkt.clouddn.com/android-armv7-debug.apk)
 
 ### 屏幕截图，该项目使用了响应式布局，适配全分辨率的屏幕
 
