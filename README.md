@@ -5,7 +5,8 @@
 ### [在线demo](http://www.66re.cn/movie)   
 ###### apk安装包 下载：[android-x86-debug.apk](http://oemc3y518.bkt.clouddn.com/android-x86-debug.apk) | 下载：[android-armv7-debug](http://oemc3y518.bkt.clouddn.com/android-armv7-debug.apk)
 
-### 扫描二维码下载  ####（请勿使用微信扫一扫）
+### 扫描二维码下载  
+####（请勿使用微信扫一扫）
 <figure class="center">
     <img src="https://qr.api.cli.im/qr?data=http%253A%252F%252Foemc3y518.bkt.clouddn.com%252Fandroid-x86-debug.apk&level=H&transparent=false&bgcolor=%23ffffff&forecolor=%23000000&blockpixel=12&marginblock=1&logourl=&size=280&kid=cliim&key=dd82a0bbbff9a2a8810c684a956d8e0d">
 </figure>
