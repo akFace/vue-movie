@@ -54,6 +54,7 @@ export default {
   created() {
     _self = this;
     this.setTheme();
+    this.setIsCordova();
   },
   methods: {
     setTheme() {
@@ -69,7 +70,12 @@ export default {
       styleEl.id = themeId
       document.body.appendChild(styleEl)
       return styleEl
-    }
+    },
+    setIsCordova() {
+      document.addEventListener("deviceready", () => {
+        _self.$store.commit('SET_IS_CORDOVA', true);
+      }, false);
+    },
   },
 }
 

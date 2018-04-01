@@ -183,8 +183,7 @@ export default {
     },
     shareMovie() {
       let router_path = this.$route.path;
-      if (this.isCordova()) {
-        console.log('cordova');
+      if (this.isCordova) {
         this.initCordovaShare();
       } else {
         this.dialog = true;
@@ -217,14 +216,11 @@ export default {
         sosh('#soshid', opt)
       })
     },
-    isCordova() {
-      document.addEventListener("deviceready", () => {
-        return true;
-      }, false);
-    },
   },
   computed: {
-
+    isCordova() {
+      return this.$store.state.user.is_cordova;
+    },
   },
   components: {
     Layout,

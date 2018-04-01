@@ -1,6 +1,7 @@
 const state = {
     is_login: false,
     self_user: {},
+    is_cordova: false,
 }
 
 // mutations
@@ -17,6 +18,9 @@ const mutations = {
             state.self_user[key] = userinfo[key];
         }
 
+    },
+    'SET_IS_CORDOVA' (state, is_cordova) {
+        state.is_cordova = is_cordova;
     },
 }
 

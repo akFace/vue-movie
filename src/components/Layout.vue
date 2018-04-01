@@ -167,8 +167,7 @@ export default {
       this.layout_type = a;
     },
     share() {
-      if (this.isCordova()) {
-        console.log('cordova');
+      if (this.isCordova) {
         this.initCordovaShare();
       } else {
         this.dialog = true;
@@ -196,17 +195,14 @@ export default {
         sosh('#soshid', opt)
       })
     },
-    isCordova() {
-      document.addEventListener("deviceready", () => {
-        return true;
-      }, false);
-    },
     closeDialog() {
       this.dialog = false;
     },
   },
   computed: {
-
+    isCordova() {
+      return this.$store.state.user.is_cordova;
+    },
   },
   components: {
 

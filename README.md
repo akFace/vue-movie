@@ -8,7 +8,7 @@
 ### 扫描二维码下载  
 ###### （请勿使用微信扫一扫）
 <figure class="center">
-    <img src="https://qr.api.cli.im/qr?data=http%253A%252F%252Foemc3y518.bkt.clouddn.com%252Fandroid-x86-debug.apk&level=H&transparent=false&bgcolor=%23ffffff&forecolor=%23000000&blockpixel=12&marginblock=1&logourl=&size=280&kid=cliim&key=dd82a0bbbff9a2a8810c684a956d8e0d">
+    <img src="https://raw.githubusercontent.com/kang558/vue-movie/master/screenshot/qr.png">
 </figure>
 
 ### 屏幕截图，该项目使用了响应式布局，适配全分辨率的屏幕
