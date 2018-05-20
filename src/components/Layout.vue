@@ -62,11 +62,11 @@ export default {
         value: '/',
         icon: 'subscriptions'
       }, {
-        title: '电影',
+        title: '正在热映',
         value: '/movie',
         icon: 'movie'
       }, {
-        title: '电视',
+        title: '即将上映',
         value: '/tv',
         icon: 'tv'
       }, {

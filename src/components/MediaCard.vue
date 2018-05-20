@@ -4,7 +4,7 @@
             <mu-card>
                 <mu-card-media>
                     <div class="default_bg">
-                        <div :style="`background-image: url(${media.cover})`" class="img"></div>
+                        <div :style="`background-image: url(${media.image})`" class="img"></div>
                     </div>
                 </mu-card-media>
                 <mu-card-title titleClass="media_title" :title="media.title" subTitle="" />
@@ -65,7 +65,7 @@ export default {
         .img {
             height: 110px;
             background-repeat: no-repeat;
-            background-size: 100%;
+            background-size: cover;
         }
     }
 }
@@ -173,4 +173,11 @@ export default {
     }
 }
 
+</style>
+<style lang="less">
+    .card_wrap {
+        .mu-card-title-container {
+            padding: 15px 2px;
+        }
+    }
 </style>

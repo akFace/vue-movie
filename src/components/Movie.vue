@@ -1,5 +1,5 @@
 <template>
-    <Layout :has_share="false" title="电影">
+    <Layout :has_share="false" title="正在热映">
         <div class="page_wrap">
             <div class="page_bd">
                 <div class="content">
@@ -31,7 +31,7 @@ export default {
     },
     created() {
         _self = this;
-        this.getFilms();
+        this.getLocationMovies();
     },
     activated() {
         this.trigger = this.$el;
@@ -42,42 +42,36 @@ export default {
         this.scroller = null;
     },
     methods: {
-        getFilms() {
+        getLocationMovies() {
             let params = {};
-            params.page = this.page || 1;
+            params.ts = '201851015581118117';
+            params.locationId = this.city.id;
             this.loading = 'loading';
-            this.$store.dispatch('getFilms', params).then(function(response) {
+            this.$store.dispatch('getLocationMovies', params).then((response) => {
                 let res = response.data;
                 if (response.ok && response.status === 200) {
-                    _self.loading = 'loaded';
-                    if (params.page > 1) {
-                        if (!res.data.length) {
-                            _self.loading = 'nomore';
-                        } else {
-                            _self.films.push(...res.data);
-                        }
-                    } else {
-                        _self.films = res.data;
-                        if (!res.data.length) {
-                            _self.loading = 'empty';
-                        }
+                    this.loading = 'loaded';
+                    for(let item of res.ms) {
+                        item.title = item.tCn;
+                        item.image = item.img;
                     }
+                    this.films = res.ms
+                    
                 } else {
-                    _self.loading = 'error';
+                    this.loading = 'error';
                 }
 
             }).catch(function(err) {
-                _self.loading = 'neterror';
                 console.error(err);
             });
         },
         refresh() {
             this.page = 1;
-            this.getFilms();
+            this.getLocationMovies();
         },
         loadMore() {
             this.page++;
-            this.getFilms();
+            this.getLocationMovies();
         },
     },
     computed: {
@@ -87,6 +81,9 @@ export default {
             } else {
                 return false;
             }
+        },
+        city() {
+          return this.$store.state.user.city;
         },
     },
     components: {

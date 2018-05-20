@@ -29,10 +29,11 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
         '/api': {
-            target: 'https://www.ifilm.ltd',
+            // target: 'https://www.ifilm.ltd',
+            target: 'http://m.mtime.cn/Service/callback.mi',
             changeOrigin: true,
             pathRewrite: {
-                '^/api': '/api',
+                '^/api': '',
             }
         },
     },

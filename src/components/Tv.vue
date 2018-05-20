@@ -1,13 +1,13 @@
 <template>
-    <Layout :has_share="false" title="电视剧">
+    <Layout :has_share="false" title="即将上映">
         <div class="page_wrap">
             <div class="page_bd">
                 <div class="content">
-                    <mu-refresh-control :refreshing="refreshing" :trigger="trigger" @refresh="refresh"/>
+                    <mu-refresh-control :refreshing="refreshing" :trigger="trigger" @refresh="refresh" />
                     <div class="list">
                         <MediaCard :media="tv_list"></MediaCard>
                     </div>
-                    <mu-infinite-scroll :scroller="scroller" :loading="getLoading" @load="loadMore"/>
+                    <mu-infinite-scroll :scroller="scroller" :loading="getLoading" @load="loadMore" />
                 </div>
             </div>
         </div>
@@ -23,7 +23,7 @@ export default {
         return {
             loading: 'init',
             tv_list: [],
-            page: 1,
+            pageIndex: 1,
             refreshing: false,
             scroller: null,
             trigger: null,
@@ -31,7 +31,7 @@ export default {
     },
     created() {
         _self = this;
-        this.getTvList();
+        this.getComingNewList();
     },
     activated() {
         this.trigger = this.$el
@@ -42,23 +42,25 @@ export default {
         this.scroller = null;
     },
     methods: {
-        getTvList() {
+        getComingNewList() {
             let params = {};
-            params.page = this.page || 1;
+            params.pageIndex = this.pageIndex || 1;
+            params.ts = '201851015581118117';
+            params.locationId = this.city.id;
             this.loading = 'loading';
-            this.$store.dispatch('getTvList', params).then(function(response) {
+            this.$store.dispatch('getComingNewList', params).then(function(response) {
                 let res = response.data;
                 if (response.ok && response.status === 200) {
                     _self.loading = 'loaded';
-                    if (params.page > 1) {
-                        if (!res.data.length) {
+                    if (params.pageIndex > 1) {
+                        if (!res.moviecomings.length) {
                             _self.loading = 'nomore';
                         } else {
-                            _self.tv_list.push(...res.data);
+                            _self.tv_list.push(...res.moviecomings);
                         }
                     } else {
-                        _self.tv_list = res.data;
-                        if (!res.data.length) {
+                        _self.tv_list = res.moviecomings;
+                        if (!res.moviecomings.length) {
                             _self.loading = 'empty';
                         }
                     }
@@ -72,12 +74,12 @@ export default {
             });
         },
         refresh() {
-            this.page = 1;
-            this.getTvList();
+            this.pageIndex = 1;
+            this.getComingNewList();
         },
         loadMore() {
-            this.page++;
-            this.getTvList();
+            this.pageIndex++;
+            this.getComingNewList();
         },
     },
     computed: {
@@ -87,6 +89,9 @@ export default {
             } else {
                 return false;
             }
+        },
+        city() {
+            return this.$store.state.user.city;
         },
     },
     components: {
@@ -114,4 +119,5 @@ export default {
         }
     }
 }
+
 </style>

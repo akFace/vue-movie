@@ -6,17 +6,23 @@
                     <mu-refresh-control :refreshing="refreshing" :trigger="trigger" @refresh="refresh" />
                     <div class="list">
                         <div class="title">
-                            <h4 class="type">电影</h4>
+                            <mu-list class="mulist">
+                                <mu-list-item :title="`正在热映${movies.total}部`" to="movie">
+                                    <mu-icon slot="right" value="keyboard_arrow_right" />
+                                </mu-list-item>
+                            </mu-list>
                         </div>
-                        <MediaCard :media="movies"></MediaCard>
-                        <div class="more" @click="jumpMovie">查看更多...</div>
+                        <MediaCard :media="movies.ms"></MediaCard>
                     </div>
                     <div class="list">
                         <div class="title">
-                            <h4 class="type">电视剧</h4>
+                            <mu-list class="mulist">
+                                <mu-list-item :title="`即将上映${movies.totalComingMovie}部`" to="tv">
+                                    <mu-icon slot="right" value="keyboard_arrow_right" />
+                                </mu-list-item>
+                            </mu-list>
                         </div>
                         <MediaCard :media="tvs"></MediaCard>
-                        <div class="more" @click="jumpTv">查看更多...</div>
                     </div>
                 </div>
             </div>
@@ -41,38 +47,54 @@ export default {
     },
     created() {
         _self = this;
-        this.getAllList();
+        this.getLocationMovies();
+        this.getComingNewList();
     },
     mounted() {
         this.trigger = this.$el
     },
     methods: {
-        getAllList() {
+        getLocationMovies() {
             let params = {};
-            params.page = this.page || 1;
+            params.ts = '201851015581118117';
+            params.locationId = this.city.id;
             this.loading = 'loading';
-            this.$store.dispatch('getAllList', params).then(function(response) {
+            this.$store.dispatch('getLocationMovies', params).then((response) => {
                 let res = response.data;
                 if (response.ok && response.status === 200) {
-                    _self.loading = 'loaded';
-                    if (params.page > 1) {
-                        _self.movies.push(...res.movies);
-                        _self.tvs.push(...res.tvs);
-                    } else {
-                        _self.movies = res.movies.slice(0, res.movies.length - 1);
-                        _self.tvs = res.tvs.slice(0, res.tvs.length - 1);
+                    this.loading = 'loaded';
+                    this.movies = res;
+                    this.movies.total = res.ms.length;
+                    this.movies.ms = res.ms.slice(0, 9);
+                    for(let item of this.movies.ms) {
+                        item.title = item.tCn;
+                        item.image = item.img;
                     }
                 } else {
-                    _self.loading = 'error';
+                    this.loading = 'error';
                 }
 
             }).catch(function(err) {
-                _self.loading = 'neterror';
+                console.error(err);
+            });
+        },
+        getComingNewList() {
+            let params = {};
+            params.ts = '201851015581118117';
+            params.locationId = this.city.id;
+            this.$store.dispatch('getComingNewList', params).then((response) => {
+                let res = response.data;
+                if (response.ok && response.status === 200) {
+                    this.tvs = res.moviecomings.slice(0, 9);
+                    // this.movies.ms = res.ms.slice(0, 9);
+                } 
+
+            }).catch(function(err) {
                 console.error(err);
             });
         },
         refresh() {
-            this.getAllList();
+            this.getLocationMovies();
         },
         jumpMovie() {
             this.$router.push('/movie')
@@ -88,6 +110,9 @@ export default {
             } else {
                 return false;
             }
+        },
+        city() {
+          return this.$store.state.user.city;
         },
     },
     components: {
@@ -117,6 +142,9 @@ export default {
                 padding: 10px;
                 background: #fff;
             }
+        }
+        .mulist {
+            background-color: #fff;
         }
         .content {
             position: relative;

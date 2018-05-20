@@ -66,5 +66,37 @@ export default {
     deleteUserFavor({ commit, state }, params) {
         return Vue.resource('user_favor').delete(params, null);
     },
-    
+
+    // 时光网api
+    getTrailerList({ commit, state }, params) {
+        return Vue.http.get('PageSubArea/TrailerList.api', { params });
+    },
+    // http://m.mtime.cn/Service/callback.mi/Movie/MovieComingNew.api?locationId=290&t=201851715513334306
+    getComingNewList({ commit, state }, params) {
+        return Vue.http.get('Movie/MovieComingNew.api', { params });
+    },
+    // http://m.mtime.cn/Service/callback.mi/Showtime/LocationMovies.api?locationId=290&t=201851715502658639
+    getLocationMovies({ commit, state }, params) {
+        return Vue.http.get('Showtime/LocationMovies.api', { params });
+    },
+    // http://m.mtime.cn/Service/callback.mi/movie/Detail.api?movieId=217497&locationId=290&t=201851716201928006
+    getMovieDetail({ commit, state }, params) {
+        return Vue.http.get('movie/Detail.api', { params });
+    },
+    // http://m.mtime.cn/Service/callback.mi/Showtime/MovieComments.api?movieId=217497&pageIndex=1&t=20185171611112771
+    getMovieComments({ commit, state }, params) {
+        return Vue.http.get('Showtime/MovieComments.api', { params });
+    },
+    // http://m.mtime.cn/Service/callback.mi/Search/HotKeyWords.api?t=201851716235830291
+    getSearchHotKeyWords({ commit, state }, params) {
+        return Vue.http.get('Search/HotKeyWords.api', { params });
+    },
+    // http://m.mtime.cn/Service/callback.mi/Showtime/SearchVoice.api?keyword=%E5%A4%8D%E4%BB%87%E8%80%85%E8%81%94%E7%9B%9F3&pageIndex=1&searchType=3&locationId=290&t=201851716251789323
+    getSearchVoice({ commit, state }, params) {
+        return Vue.http.get('Showtime/SearchVoice.api', { params });
+    },
+    // http://m.mtime.cn/Service/callback.mi/Showtime/HotCitiesByCinema.api?t=20185192041974071
+    getCityList({ commit, state }, params) {
+        return Vue.http.get('Showtime/HotCitiesByCinema.api', { params });
+    },
 }

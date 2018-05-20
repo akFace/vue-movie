@@ -8,10 +8,9 @@
                 <h5 class="title">仅显示最近浏览的30条数据</h5>
                 <div class="list">
                     <div class="item" v-for="movie in list" @click="jumpDetail(movie.id)" :key="movie.id">
-                        <div class="img" :style="`background-image: url(${movie.cover})`"></div>
+                        <div class="img" :style="`background-image: url(${movie.image})`"></div>
                         <div class="box">
-                            <div class="tag" :class="`tag${movie.tag}`">{{ movie.tag | getType }}</div>
-                            <div class="title">{{ movie.title }}</div>
+                            <div class="title">{{ movie.titleCn }}</div>
                         </div>
                     </div>
                 </div>

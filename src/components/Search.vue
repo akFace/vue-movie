@@ -12,16 +12,7 @@
         <div class="page_bd">
             <div class="content">
                 <div class="list" v-if="movies && movies.length">
-                    <div class="title">
-                        <h4 class="type">电影</h4>
-                    </div>
                     <MediaCard :media="movies"></MediaCard>
-                </div>
-                <div class="list" v-if="tvs && tvs.length">
-                    <div class="title">
-                        <h4 class="type">电视剧</h4>
-                    </div>
-                    <MediaCard :media="tvs"></MediaCard>
                 </div>
                 <div style="text-align: center;padding-top: 20px;" v-if="showEmpt">抱歉，没有找到要找的东西噢！</div>
                 <mu-infinite-scroll :scroller="scroller" :loading="getLoading" @load="loadMore"/>
@@ -43,7 +34,7 @@ export default {
             loading: 'init',
             movies: [],
             tvs: [],
-            page: 1,
+            pageIndex: 1,
             keyword: '',
             scroller: null,
         };
@@ -75,7 +66,7 @@ export default {
             }
             this.$refs.input_dom.blur();
             this.resetData();
-            this.getSearch();
+            this.getSearchVoice();
         },
         resetData() {
             this.loading = 'init';
@@ -87,21 +78,24 @@ export default {
                 this.$refs.input_dom.focus();
             })
         },
-        getSearch() {
+        getSearchVoice() {
             let params = {};
-            params.page = this.page || 1;
-            params.q = this.keyword;
+            params.pageIndex = this.pageIndex || 1;
+            params.keyword = this.keyword;
             this.loading = 'loading';
-            this.$store.dispatch('getSearch', params).then(function(response) {
+            this.$store.dispatch('getSearchVoice', params).then(function(response) {
                 let res = response.data;
                 if (response.ok && response.status === 200) {
+                    res = JSON.parse(res);
                     _self.loading = 'loaded';
-                    if (params.page > 1) {
+                    for(let item of res.movies) {
+                        item.title = item.name;
+                        item.image = item.img;
+                    }
+                    if (params.pageIndex > 1) {
                         _self.movies.push(...res.movies);
-                        _self.tvs.push(...res.tvs);
                     } else {
                         _self.movies = res.movies;
-                        _self.tvs = res.tvs;
                     }
                 } else {
                     _self.loading = 'error';
@@ -113,8 +107,8 @@ export default {
             });
         },
         loadMore() {
-            // this.page++;
-            // this.getSearch();
+            this.pageIndex++;
+            this.getSearchVoice();
         },
         goback() {
             this.$router.go(-1);

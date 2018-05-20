@@ -1,33 +1,61 @@
 <template>
-  <Layout :has_menu="false" :has_footer="false" :title="movie.title">
+  <Layout :has_menu="false" :has_footer="false" :title="movie.titleCn" class="movie_detail">
     <div class="menu" slot="bar_menu">
       <mu-menu-item title="分享" @click="shareMovie" />
       <mu-menu-item title="收藏" @click="saveMovie" />
     </div>
     <div class="page_wrap">
-      <div class="page_hd">
-      </div>
-      <div class="page_bd">
-        <div class="content">
-          <mu-card>
-            <mu-card-media title="" subTitle="">
-              <div class="player_box">
-                <div class="player">
-                  <div class="box" ref="Dplayer_dom"></div>
-                </div>
+      <div class="page_hd" v-if="loading === 'loaded'">
+        <div class="media_info_wrp">
+          <div class="media_info">
+            <div class="info_box">
+              <div class="info_img">
+                <img :src="movie.image" class="pos_img">
               </div>
-            </mu-card-media>
-            <mu-card-title :title="movie.title" subTitle="" />
-          </mu-card>
-          <div class="btn_box" v-if="movie.src && movie.src.length">
-            <mu-raised-button class="demo-raised-button btn" :class="{active: item.active}" v-for="(item, i) in movie.movie_src" :key="item.src" primary @click="changeSource(item)">
-              <span v-if="movie.tag === '1'">资源 {{ i+1 }}</span>
-              <span v-if="movie.tag === '2'">{{ i+1 }}</span>
-            </mu-raised-button>
+              <div class="info_text">
+                <div class="title">
+                  <span>{{movie.titleCn}} ({{movie.year}})</span>
+                  <span class="media_tags">
+                    <span class="tag" v-for="tag in movie.type">{{tag}}</span>
+                  </span>
+                </div>
+                <div class="en_title">{{movie.titleEn}}</div>
+                <div class="type_tag">
+                  <span>{{movie.runTime}}</span>
+                  <span>{{movie.release.date}} </span>
+                  <span>{{movie.release.location}}上映 - </span>
+                  <span v-if="movie.is3D">3D</span>
+                  <span v-if="!movie.is3D">2D</span>
+                  <span v-if="movie.isIMAX">/ IMAX</span>
+                  <span v-if="movie.isIMAX3D">/ IMAX3D</span>
+                  <span v-if="movie.isDMAX">/ 中国巨幕</span>
+                </div>
+                <div class="intro">
+                  <div class="list">
+                    <div class="item">
+                      <div class="title">导演：</div>
+                      <div class="name"><span v-for="director in movie.directors">{{director}}</span></div>
+                    </div>
+                    <div class="item">
+                      <div class="title">演员：</div>
+                      <div class="name"><span v-for="actor in movie.actors">{{actor}}、</span>...</div>
+                    </div>
+                  </div>
+                  <div class="intro_text">剧情：{{movie.content}}</div>
+                </div>
+                <div class="rating" v-if="movie.rating > 0"><span class="value">{{movie.rating}}</span>分</div>
+              </div>
+            </div>
+          </div>
+          <div class="media_bg">
+            <div class="pos_bg" :style="`background-image: url(${movie.image})`"></div>
           </div>
         </div>
-        <div class="loading_box">
-          <mu-circular-progress :size="45" v-if="loading === 'loading'" />
+      </div>
+      <div class="page_bd" v-if="loading === 'loaded'">
+        <div class="content">
+          <div class="title">预告片：</div>
+          <div class="video_list"></div>
         </div>
       </div>
       <div class="page_ft">
@@ -35,6 +63,9 @@
           <div id="soshid"></div>
           <mu-flat-button slot="actions" @click="close" primary label="关闭" />
         </mu-dialog>
+      </div>
+      <div class="loading_box">
+        <mu-circular-progress :size="45" v-if="loading === 'loading'" />
       </div>
     </div>
   </Layout>
@@ -57,11 +88,11 @@ export default {
   },
   created() {
     _self = this;
-    this.getFilmsDetail();
+    this.getMovieDetail();
   },
   activated() {
     // this.resetData()
-    // this.getFilmsDetail();
+    // this.getMovieDetail();
   },
   methods: {
     resetData() {
@@ -70,7 +101,6 @@ export default {
     },
     changeSource(item) {
       this.current_src = item.src;
-      this.handleData(item);
       this.initDplayer();
     },
     initDplayer() {
@@ -100,19 +130,19 @@ export default {
         }]
       });
     },
-    getFilmsDetail() {
+    getMovieDetail() {
       let params = {};
-      params.film_id = this.$route.params.movie_id;
+      params.movieId = this.$route.params.movie_id;
+      params.ts = '201851015581118117';
+      params.locationId = this.city.id;
       this.loading = 'loading';
-      this.$store.dispatch('getFilmsDetail', params).then(function(response) {
+      this.$store.dispatch('getMovieDetail', params).then(function(response) {
         let res = response.data;
         if (response.ok && response.status === 200) {
           _self.loading = 'loaded';
-          _self.current_src = res.src[0];
-          _self.movie = _self.initData(res);
+          _self.movie = JSON.parse(res);
           _self.$nextTick(() => {
             _self.saveHistory();
-            _self.initDplayer();
           })
         } else {
           _self.loading = 'loaded';
@@ -121,28 +151,6 @@ export default {
       }).catch(function(err) {
         _self.loading = 'loaded';
       });
-    },
-    initData(res) {
-      let data = res;
-      let movie_src = [];
-      for (let i of data.src) {
-        movie_src.push({
-          src: i,
-          active: false
-        })
-      }
-      movie_src[0].active = true;
-      data.movie_src = movie_src;
-      return data;
-    },
-    handleData(item) {
-      for (let i of this.movie.movie_src) {
-        if (i.src === item.src) {
-          i.active = true;
-        } else {
-          i.active = false;
-        }
-      }
     },
     saveHistory() {
       let arr = [];
@@ -221,6 +229,9 @@ export default {
     isCordova() {
       return this.$store.state.user.is_cordova;
     },
+    city() {
+      return this.$store.state.user.city;
+    },
   },
   components: {
     Layout,
@@ -230,11 +241,147 @@ export default {
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
+@import url('../assets/less/common.less');
 .page_wrap {
+
   margin: 0 auto;
-  .page_hd {}
+  .page_hd {
+    .media_info_wrp {
+      position: relative;
+      .media_info {
+        position: relative;
+        margin: 0 auto;
+        z-index: 101;
+        top: 70px;
+        width: 1200px;
+        .info_box {
+          display: flex;
+          flex-wrap: wrap;
+          color: #eee;
+          .info_img {
+            .pos_img {
+              width: 225px;
+              height: auto;
+              display: block;
+              border-radius: 4px;
+            }
+          }
+
+          .info_text {
+            padding-left: 20px;
+            .title {
+              padding-top: 5px;
+              display: inline-block;
+              font-size: 20px;
+              line-height: 22px;
+              font-weight: 700;
+              white-space: nowrap;
+              overflow: hidden;
+              -o-text-overflow: ellipsis;
+              text-overflow: ellipsis;
+              .media_tags {
+                display: inline-block;
+                margin-left: 20px;
+                vertical-align: top;
+                .tag {
+                  font-size: 12px;
+                  display: inline-block;
+                  vertical-align: middle;
+                  margin-right: 10px;
+                  height: 20px;
+                  padding: 0 4px;
+                  line-height: 20px;
+                  border: 1px solid #fff;
+                  border-radius: 3px;
+                }
+              }
+            }
+            .en_title {
+              color: #fff;
+              font-size: 17px;
+            }
+            .type_tag {
+              padding-top: 15px;
+            }
+            .intro {
+              .list {
+                padding-top: 15px;
+                .item {
+                  margin-bottom: 5px;
+                  .title {
+                    padding-top: 0;
+                    font-size: 15px;
+                    font-weight: normal;
+                  }
+                  display: flex;
+                }
+              }
+              .intro_text {
+                max-width: 800px;
+                padding-top: 15px;
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 5;
+              }
+            }
+            .rating {
+              padding-top: 10px;
+              .value {
+                padding-right: 5px;
+                font-weight: bold;
+                font-size: 40px;
+              }
+            }
+          }
+        }
+      }
+      .media_bg {
+        height: 520px;
+        width: 100%;
+        position: absolute;
+        overflow: hidden;
+        top: -70px;
+        left: 0;
+        transform: translateZ(0);
+        &:after {
+          display: block;
+          content: '';
+          height: 600px;
+          width: 100%;
+          position: absolute;
+          overflow: hidden;
+          top: -70px;
+          left: 0;
+          z-index: 11;
+          background-color: rgba(0, 0, 0, 0.3);
+        }
+        .pos_bg {
+          position: absolute;
+          background-size: cover;
+          background-position: 50%;
+          width: 110%;
+          min-width: 1120px;
+          height: 496px;
+          top: 50%;
+          left: 50%;
+          margin: -260px -55%;
+          z-index: 10;
+          background-repeat: no-repeat;
+          -webkit-filter: blur(40px);
+          -moz-filter: blur(40px);
+          -ms-filter: blur(40px);
+          filter: blur(40px);
+          filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=10, MakeShadow=false);
+        }
+      }
+    }
+  }
   .page_bd {
+    padding-top: 200px;
     .content {
+      max-width: 1200px;
+      margin: auto;
       .player_box {
         padding: 15px;
         width: 100%;
@@ -253,12 +400,12 @@ export default {
         }
       }
     }
-    .loading_box {
-      text-align: center;
-      padding-top: 40px;
-    }
   }
   .page_ft {}
+  .loading_box {
+    text-align: center;
+    padding-top: 40px;
+  }
 }
 
 </style>
@@ -271,7 +418,6 @@ export default {
 
 @media (min-width: @screen_mg_min) {
   .page_wrap {
-    max-width: 1200px!important;
     margin: 0 auto;
     .page_bd {}
   }
@@ -279,14 +425,21 @@ export default {
 
 
 
+
+
+
+
 /* 大屏幕（大桌面显示器，大于等于 1200px） */
 
 @media (max-width: @screen_lg_min) {
   .page_wrap {
-    max-width: 1000px!important;
     .page_bd {}
   }
 }
+
+
+
+
 
 
 
@@ -294,10 +447,14 @@ export default {
 
 @media (max-width: @screen_md_min) {
   .page_wrap {
-    max-width: @screen_md_min - 40px!important;
     .page_bd {}
   }
 }
+
+
+
+
+
 
 
 
@@ -305,19 +462,9 @@ export default {
 
 @media (max-width: @screen_sm_min) {
   .page_wrap {
-    max-width: @screen_sm_min - 20px!important;
     .page_bd {}
   }
 }
-
-
-
-
-
-
-
-
-
 
 
 
@@ -332,6 +479,14 @@ export default {
   .page_wrap {
     width: 100%!important;
     .page_bd {}
+  }
+}
+
+</style>
+<style lang="less">
+.movie_detail {
+  .mu-appbar {
+    background-color: transparent!important;
   }
 }
 
