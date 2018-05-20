@@ -13,6 +13,7 @@ import History from '@/components/History'
 import Favorite from '@/components/Favorite'
 import Settings from '@/components/Settings'
 import Login from '@/components/login'
+import MovieAllHotComments from '@/components/MovieAllHotComments'
 import test from '@/components/test'
 
 Vue.use(VueRouter)
@@ -46,6 +47,11 @@ const routes =  [
       path: '/movie/detail/:movie_id',
       name: 'MovieDetail',
       component: MovieDetail,
+    },
+    {
+      path: '/movie/HotComments/:movie_id',
+      name: 'MovieAllHotComments',
+      component: MovieAllHotComments,
     },
     {
       path: '/all/search',

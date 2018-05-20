@@ -1,11 +1,11 @@
 <template>
-  <Layout :has_menu="false" :has_footer="false" :title="movie.titleCn" class="movie_detail">
+  <Layout :has_menu="false" :has_footer="false" :title="movie.titleCn" :class="{movie_detail: !show_bar}">
     <div class="menu" slot="bar_menu">
       <mu-menu-item title="分享" @click="shareMovie" />
       <mu-menu-item title="收藏" @click="saveMovie" />
     </div>
     <div class="page_wrap">
-      <div class="page_hd" v-if="loading === 'loaded'">
+      <div class="page_hd" v-if="loading.movie === 'loaded'">
         <div class="media_info_wrp">
           <div class="media_info">
             <div class="info_box">
@@ -52,10 +52,52 @@
           </div>
         </div>
       </div>
-      <div class="page_bd" v-if="loading === 'loaded'">
+      <div class="page_bd" v-if="loading.movie === 'loaded'">
         <div class="content">
-          <div class="title">预告片：</div>
-          <div class="video_list"></div>
+          <div class="previve">
+            <div class="title">预告片：</div>
+            <div class="video_list">
+              <a href="javascript:;" v-for="video in movie.videos" style="display: inline-block">
+              <img :src="video.image" @click="changeSource(video)">
+              <p>{{video.title}}</p>
+            </a>
+            </div>
+          </div>
+          <div class="comments_box">
+            <div class="title">精选影评{{totalCount}}条</div>
+            <div class="list">
+              <div class="item" v-for="comment in hot_comments_list">
+                <div class="header_img" :style="`background-image: url(${comment.headurl})`"></div>
+                <div class="comment">
+                  <div class="nickname">
+                    <span class="name">{{comment.nickname}}</span>
+                    <mu-badge :content="`${comment.rating}分`" primary slot="after" />
+                  </div>
+                  <div class="comment_title">{{comment.title}}</div>
+                  <div class="text">{{comment.content}}</div>
+                </div>
+              </div>
+              <div class="showmore" @click="jumpAllHotComments" style="text-align: right;cursor: pointer;padding: 10px;color: blue;"><span>查看全部{{totalCount}}条精选影评&gt;&gt;</span></div>
+            </div>
+            <div class="title">网友短评：</div>
+            <div class="list">
+              <div class="item" v-for="comment in comments_list">
+                <div class="header_img" :style="`background-image: url(${comment.caimg})`"></div>
+                <div class="comment">
+                  <div class="nickname">
+                    <span class="name">{{comment.ca}}</span>
+                    <mu-badge :content="`${comment.cr}分`" primary slot="after" />
+                  </div>
+                  <div class="text">{{comment.ce}}</div>
+                </div>
+              </div>
+              <div class="loading_box">
+                <mu-circular-progress :size="45" v-if="loading.comments === 'loading'" />
+                <span v-if="loading.comments === 'nomore'" >加载完了哦~~</span>
+                <span v-if="loading.comments === 'empty'" >暂无数据~~</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div class="page_ft">
@@ -65,8 +107,12 @@
         </mu-dialog>
       </div>
       <div class="loading_box">
-        <mu-circular-progress :size="45" v-if="loading === 'loading'" />
+        <mu-circular-progress :size="45" v-if="loading.movie === 'loading'" />
       </div>
+      <mu-dialog :open="showVideo" :title="current_video.title" @close="closeVideo">
+        <div class="video_box" ref="Dplayer_dom" style="width: 100%;height: 100%"></div>
+        <mu-flat-button slot="actions" primary @click="closeVideo" label="关闭" />
+      </mu-dialog>
     </div>
   </Layout>
 </template>
@@ -80,15 +126,28 @@ export default {
   data: function() {
     return {
       movie: {},
-      current_src: '',
-      loading: 'init',
+      current_video: {},
+      loading: {
+        movie: 'init',
+        comments: 'init'
+      },
       Dplayer: null,
       dialog: false,
+      showVideo: false,
+      show_bar: false,
+      pageIndex: 1,
+      comments_list: [],
+      totalCount: 0,
+      hot_comments_list: [],
+      scroller: null,
     };
   },
   created() {
     _self = this;
     this.getMovieDetail();
+    this.$nextTick(() => {
+      this.initScrollDom();
+    });
   },
   activated() {
     // this.resetData()
@@ -97,18 +156,28 @@ export default {
   methods: {
     resetData() {
       this.movie = {};
-      this.current_src = '';
+      this.current_video = {};
     },
-    changeSource(item) {
-      this.current_src = item.src;
-      this.initDplayer();
+    changeSource(video) {
+      this.showVideo = true;
+      this.current_video = video;
+      this.$nextTick(() => {
+        this.initDplayer();
+      })
+    },
+    jumpAllHotComments() {
+      this.$router.push(`/movie/HotComments/${this.$route.params.movie_id}`)
+    },
+    closeVideo() {
+      this.showVideo = false
     },
     initDplayer() {
       let Dplayer_dom = this.$refs.Dplayer_dom;
+      console.log(Dplayer_dom)
       this.Dplayer = new DPlayer({
         element: Dplayer_dom,
         video: {
-          url: _self.current_src,
+          url: _self.current_video.url,
           // pic: _self.movie.cover,
           autoplay: true,
           lang: 'zh',
@@ -135,22 +204,81 @@ export default {
       params.movieId = this.$route.params.movie_id;
       params.ts = '201851015581118117';
       params.locationId = this.city.id;
-      this.loading = 'loading';
+      this.loading.movie = 'loading';
       this.$store.dispatch('getMovieDetail', params).then(function(response) {
         let res = response.data;
         if (response.ok && response.status === 200) {
-          _self.loading = 'loaded';
+          _self.loading.movie = 'loaded';
           _self.movie = JSON.parse(res);
+          _self.getHotLongComments();
+          _self.getMovieComments();
           _self.$nextTick(() => {
             _self.saveHistory();
           })
         } else {
-          _self.loading = 'loaded';
+          _self.loading.movie = 'loaded';
         }
 
       }).catch(function(err) {
-        _self.loading = 'loaded';
+        _self.loading.movie = 'loaded';
       });
+    },
+    getHotLongComments() {
+      let params = {};
+      params.movieId = this.$route.params.movie_id;
+      params.ts = '201851015581118117';
+      params.pageIndex = this.pageIndex || 1;
+      this.$store.dispatch('getHotLongComments', params).then((response) => {
+        let res = response.data;
+        if (response.ok && response.status === 200) {
+          this.hot_comments_list = res.comments;
+          this.totalCount = res.totalCount;
+        } else {
+          _self.loading.movie = 'loaded';
+        }
+
+      }).catch(function(err) {
+        _self.loading.movie = 'loaded';
+      });
+    },
+    getMovieComments() {
+      let params = {};
+      params.movieId = this.$route.params.movie_id;
+      params.ts = '201851015581118117';
+      params.pageIndex = this.pageIndex || 1;
+      this.loading.comments = 'loading';
+      this.$store.dispatch('getMovieComments', params).then(function(response) {
+        let res = response.data;
+        res = JSON.parse(res);
+        console.log(res);
+        if (response.ok && response.status === 200) {
+          _self.loading.comments = 'loaded';
+          if (params.pageIndex > 1) {
+            if (!res.cts.length) {
+              _self.loading.comments = 'nomore';
+            } else {
+              _self.comments_list.push(...res.cts);
+            }
+          } else {
+            _self.comments_list = res.cts;
+            if (!res.cts.length) {
+              _self.loading.comments = 'empty';
+            }
+          }
+        } else {
+          _self.loading.comments = 'loaded';
+        }
+
+      }).catch(function(err) {
+        _self.loading.comments = 'loaded';
+      });
+    },
+    loadMore() {
+      if (this.loading.comments !== 'loaded') {
+        return;
+      }
+      this.pageIndex++;
+      this.getMovieComments();
     },
     saveHistory() {
       let arr = [];
@@ -205,7 +333,7 @@ export default {
     initCordovaShare() {
       let opt = {};
       opt.url = location.href;
-      opt.message = `《${this.movie.title}》在线观看_电视剧_美剧_免费电影在线看_2017最新电影`;
+      opt.message = `《${this.movie.titleCn}》在线观看_电视剧_美剧_免费电影在线看_2017最新电影`;
       window.plugins.socialsharing.shareWithOptions(opt, (onSuccess) => {
         console.log(onSuccess);
       }, (onError) => {
@@ -215,7 +343,7 @@ export default {
     initWebShare() {
       let opt = {};
       opt.url = location.href;
-      opt.title = `《${this.movie.title}》在线观看_电视剧_美剧_免费电影在线看_2017最新电影`;
+      opt.title = `《${this.movie.titleCn}》在线观看_电视剧_美剧_免费电影在线看_2017最新电影`;
       opt.pic = this.movie.cover;
       opt.digest = '';
       opt.sites = ['weixin,', 'weibo', 'qzone', 'tqq', 'douban', 'tieba'];
@@ -224,6 +352,23 @@ export default {
         sosh('#soshid', opt)
       })
     },
+    initScrollDom() {
+      console.log(this.$el);
+      this.$el.onscroll = () => {
+        var h = document.documentElement.scrollTop || document.body.scrollTop || this.$el.scrollTop;
+        var scrollHeight = this.$el.scrollHeight;
+        console.log(scrollHeight);
+        console.log(h);
+        if (h >= 550) {
+          this.show_bar = true;
+        } else {
+          this.show_bar = false;
+        }
+        if (h >= scrollHeight - 800) {
+          this.loadMore();
+        }
+      }
+    },
   },
   computed: {
     isCordova() {
@@ -231,6 +376,13 @@ export default {
     },
     city() {
       return this.$store.state.user.city;
+    },
+    getLoading() {
+      if (this.loading.comments === 'loading') {
+        return true;
+      } else {
+        return false;
+      }
     },
   },
   components: {
@@ -378,7 +530,7 @@ export default {
     }
   }
   .page_bd {
-    padding-top: 200px;
+    padding-top: 140px;
     .content {
       max-width: 1200px;
       margin: auto;
@@ -386,6 +538,55 @@ export default {
         padding: 15px;
         width: 100%;
         overflow: hidden;
+      }
+      .title {
+        padding: 10px 0;
+        font-size: 18px;
+      }
+      .video_list {
+        img {
+          max-width: 250px;
+          height: auto;
+          margin-right: 15px;
+          cursor: pointer;
+        }
+      }
+      .comments_box {
+        padding-top: 20px;
+        .list {
+          .item {
+            padding: 15px;
+            display: flex;
+            border-bottom: dashed 1px #eee;
+            &:nth-child(2n) {
+              background-color: #f5f5f5;
+            }
+            .header_img {
+              width: 50px;
+              height: 50px;
+              border-radius: 50%;
+              background-size: 100%;
+            }
+            .comment {
+              padding-left: 15px;
+              flex: 1;
+              .nickname {
+                padding-top: 5px;
+                padding-bottom: 10px;
+                .name {
+                  padding-right: 10px;
+                }
+              }
+              .comment_title {
+                  padding-bottom: 5px;
+                  font-weight: bold;
+              }
+              .text {
+                line-height: 28px;
+              }
+            }
+          }
+        }
       }
       .btn_box {
         padding: 30px;
@@ -429,6 +630,10 @@ export default {
 
 
 
+
+
+
+
 /* 大屏幕（大桌面显示器，大于等于 1200px） */
 
 @media (max-width: @screen_lg_min) {
@@ -436,6 +641,10 @@ export default {
     .page_bd {}
   }
 }
+
+
+
+
 
 
 
@@ -458,6 +667,10 @@ export default {
 
 
 
+
+
+
+
 /* 小屏幕（平板，大于等于 768px） */
 
 @media (max-width: @screen_sm_min) {
@@ -465,6 +678,10 @@ export default {
     .page_bd {}
   }
 }
+
+
+
+
 
 
 

@@ -87,6 +87,11 @@ export default {
     getMovieComments({ commit, state }, params) {
         return Vue.http.get('Showtime/MovieComments.api', { params });
     },
+
+    // http://m.mtime.cn/Service/callback.mi/Movie/HotLongComments.api?movieId=217497&pageIndex=1&t=201852016544868515
+    getHotLongComments({ commit, state }, params) {
+        return Vue.http.get('Movie/HotLongComments.api', { params });
+    },
     // http://m.mtime.cn/Service/callback.mi/Search/HotKeyWords.api?t=201851716235830291
     getSearchHotKeyWords({ commit, state }, params) {
         return Vue.http.get('Search/HotKeyWords.api', { params });
