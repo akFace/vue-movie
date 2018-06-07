@@ -2,7 +2,7 @@
 
 从零开始搭建，适合新手练手参考。api来源于网上，仅供开发参考之用，禁用于商业，否则后果自负。
 
-### [在线demo](http://www.66re.cn/movie)   
+### [在线demo](http://www.66re.cn/movie)   已经更换成时光网，因为时光网API防跨域原因，需要查看效果的可以clone下来本地运行体验哦。在线的不支持了，另外需要看旧版的可以切换到 [tag-0.1分支](https://github.com/kang558/vue-movie/tree/tag-0.1)
 ###### apk安装包 下载：[android-x86-debug.apk](http://oemc3y518.bkt.clouddn.com/android-x86-debug.apk) | 下载：[android-armv7-debug](http://oemc3y518.bkt.clouddn.com/android-armv7-debug.apk)
 
 ### 扫描二维码下载  
