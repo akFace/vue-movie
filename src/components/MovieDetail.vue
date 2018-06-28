@@ -209,7 +209,7 @@ export default {
         let res = response.data;
         if (response.ok && response.status === 200) {
           _self.loading.movie = 'loaded';
-          _self.movie = JSON.parse(res);
+          _self.movie = res;
           _self.getHotLongComments();
           _self.getMovieComments();
           _self.$nextTick(() => {
@@ -249,7 +249,7 @@ export default {
       this.loading.comments = 'loading';
       this.$store.dispatch('getMovieComments', params).then(function(response) {
         let res = response.data;
-        res = JSON.parse(res);
+        // res = JSON.parse(res);
         console.log(res);
         if (response.ok && response.status === 200) {
           _self.loading.comments = 'loaded';
@@ -266,11 +266,11 @@ export default {
             }
           }
         } else {
-          _self.loading.comments = 'loaded';
+          _self.loading.comments = 'error';
         }
 
       }).catch(function(err) {
-        _self.loading.comments = 'loaded';
+        _self.loading.comments = 'error';
       });
     },
     loadMore() {
@@ -344,7 +344,7 @@ export default {
       let opt = {};
       opt.url = location.href;
       opt.title = `《${this.movie.titleCn}》在线观看_电视剧_美剧_免费电影在线看_2017最新电影`;
-      opt.pic = this.movie.cover;
+      opt.pic = this.movie.image;
       opt.digest = '';
       opt.sites = ['weixin,', 'weibo', 'qzone', 'tqq', 'douban', 'tieba'];
 
@@ -364,7 +364,7 @@ export default {
         } else {
           this.show_bar = false;
         }
-        if (h >= scrollHeight - 800) {
+        if (h >= scrollHeight - 1000) {
           this.loadMore();
         }
       }
