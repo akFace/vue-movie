@@ -207,6 +207,8 @@ export default {
       this.loading.movie = 'loading';
       this.$store.dispatch('getMovieDetail', params).then(function(response) {
         let res = response.data;
+        res = JSON.parse(res);
+        // console.log(res)
         if (response.ok && response.status === 200) {
           _self.loading.movie = 'loaded';
           _self.movie = res;
@@ -250,7 +252,6 @@ export default {
       this.$store.dispatch('getMovieComments', params).then(function(response) {
         let res = response.data;
         // res = JSON.parse(res);
-        console.log(res);
         if (response.ok && response.status === 200) {
           _self.loading.comments = 'loaded';
           if (params.pageIndex > 1) {
@@ -285,7 +286,7 @@ export default {
       arr = Store.get('view_list');
       if (arr) {
         arr = arr.filter((item) => {
-          return item.id != _self.movie.id;
+          return item.videoId != _self.movie.videoId;
         })
         arr.unshift(this.movie);
         // 仅仅保留最近浏览的30个数据
@@ -303,7 +304,7 @@ export default {
       arr = Store.get('favorite_list');
       if (arr) {
         arr = arr.filter((item) => {
-          return item.id != _self.movie.id;
+          return item.videoId != _self.movie.videoId;
         })
         arr.unshift(this.movie);
       } else {
@@ -335,7 +336,6 @@ export default {
       opt.url = location.href;
       opt.message = `《${this.movie.titleCn}》在线观看_电视剧_美剧_免费电影在线看_2017最新电影`;
       window.plugins.socialsharing.shareWithOptions(opt, (onSuccess) => {
-        console.log(onSuccess);
       }, (onError) => {
         console.log(onError);
       });
@@ -353,12 +353,9 @@ export default {
       })
     },
     initScrollDom() {
-      console.log(this.$el);
       this.$el.onscroll = () => {
         var h = document.documentElement.scrollTop || document.body.scrollTop || this.$el.scrollTop;
         var scrollHeight = this.$el.scrollHeight;
-        console.log(scrollHeight);
-        console.log(h);
         if (h >= 550) {
           this.show_bar = true;
         } else {

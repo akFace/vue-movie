@@ -7,21 +7,21 @@
             <div class="page_bd">
                 <div class="list">
                     <div class="item" v-for="movie in list" :key="movie.id"
-                            @click="jumpDetail(movie.id)" 
+                            @click="jumpDetail(movie.videoId)" 
                             @touchstart='touchStart(movie)'
                             @touchmove='touchMove'
                             @touchend='touchEnd'>
-                        <div class="img" :style="`background-image: url(${movie.cover})`"></div>
+                        <div class="img" :style="`background-image: url(${movie.image})`"></div>
                         <div class="box">
                             <div class="tag" :class="`tag${movie.tag}`">{{ movie.tag | getType }}</div>
-                            <div class="title">{{ movie.title }}</div>
+                            <div class="title">{{ movie.titleCn }}</div>
                         </div>
                     </div>
                 </div>
                 <div class="empty" v-if="!list.length">暂时无收藏噢...</div>
             </div>
             <mu-dialog class="dialog" :open="dialog" title="确定删除" @close="close">
-                {{ tuch_item.title }}
+                {{ tuch_item.titleCn }}
                 <mu-flat-button slot="actions" @click="close" primary label="取消"/>
                 <mu-flat-button slot="actions" primary @click="confirm" label="确定"/>
               </mu-dialog>
