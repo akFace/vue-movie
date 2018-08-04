@@ -207,10 +207,11 @@ export default {
       this.loading.movie = 'loading';
       this.$store.dispatch('getMovieDetail', params).then(function(response) {
         let res = response.data;
-        res = JSON.parse(res);
+        res && res.videoId ? res = res : res = JSON.parse(res);
         // console.log(res)
         if (response.ok && response.status === 200) {
           _self.loading.movie = 'loaded';
+          res.movie_id = params.movieId;
           _self.movie = res;
           _self.getHotLongComments();
           _self.getMovieComments();
@@ -252,6 +253,7 @@ export default {
       this.$store.dispatch('getMovieComments', params).then(function(response) {
         let res = response.data;
         // res = JSON.parse(res);
+        res && res.cts ? res = res : res = JSON.parse(res);
         if (response.ok && response.status === 200) {
           _self.loading.comments = 'loaded';
           if (params.pageIndex > 1) {
@@ -286,7 +288,7 @@ export default {
       arr = Store.get('view_list');
       if (arr) {
         arr = arr.filter((item) => {
-          return item.videoId != _self.movie.videoId;
+          return item.movie_id != this.$route.params.movie_id;
         })
         arr.unshift(this.movie);
         // 仅仅保留最近浏览的30个数据
@@ -304,7 +306,7 @@ export default {
       arr = Store.get('favorite_list');
       if (arr) {
         arr = arr.filter((item) => {
-          return item.videoId != _self.movie.videoId;
+          return item.movie_id != this.$route.params.movie_id;
         })
         arr.unshift(this.movie);
       } else {
