@@ -30,7 +30,7 @@
 
 #### PC端效果
 <figure class="center">
-    <img src="https://raw.githubusercontent.com/kang558/vue-movie/master/screenshot/pc.png">
+    <img src="https://raw.githubusercontent.com/kang558/vue-movie/master/screenshot/new.png">
 </figure>
 
 ### 主要特色：
