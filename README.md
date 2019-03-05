@@ -30,6 +30,9 @@
 
 #### PC端效果
 <figure class="center">
+    <img src="https://raw.githubusercontent.com/kang558/vue-movie/master/screenshot/pc1.png">
+</figure>
+<figure class="center">
     <img src="https://raw.githubusercontent.com/kang558/vue-movie/master/screenshot/new.png">
 </figure>
 
