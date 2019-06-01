@@ -7,6 +7,9 @@ import store from './vuex/store'
 import MuseUI from 'muse-ui' 
 import 'muse-ui/dist/muse-ui.css'
 
+import F2 from '@antv/f2' 
+import '@antv/f2/lib/interaction/';
+
 // import Fastclick from 'fastclick'
 import Store from 'storejs'
 
@@ -15,6 +18,7 @@ import filters from './filters.js';
 // Fastclick.attach(document.body)
 Vue.use(MuseUI)
 Vue.use(Store)
+Vue.use(F2)
 
 Vue.config.productionTip = false
 

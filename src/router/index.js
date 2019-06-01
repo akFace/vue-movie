@@ -15,6 +15,7 @@ import Settings from '@/components/Settings'
 import Login from '@/components/login'
 import MovieAllHotComments from '@/components/MovieAllHotComments'
 import test from '@/components/test'
+import F2test from '@/components/F2test'
 
 Vue.use(VueRouter)
 
@@ -85,6 +86,11 @@ const routes =  [
       component: test,
       // 该页面必须登录才能访问
       meta: { needLogin: true }
+    },
+    {
+      path: '/user/F2test',
+      name: 'F2test',
+      component: F2test,
     },
     {
       path: '/user/login',
