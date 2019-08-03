@@ -10,6 +10,7 @@
           <div class="media_info">
             <div class="info_box">
               <div class="info_img">
+                <!-- 海报 -->
                 <img :src="movie.image" class="pos_img">
               </div>
               <div class="info_text">
@@ -48,6 +49,7 @@
             </div>
           </div>
           <div class="media_bg">
+            <!-- 高斯模糊背景图 -->
             <div class="pos_bg" :style="`background-image: url(${movie.image})`"></div>
           </div>
         </div>
@@ -158,6 +160,7 @@ export default {
       this.movie = {};
       this.current_video = {};
     },
+    // 选择一个播放资源
     changeSource(video) {
       this.showVideo = true;
       this.current_video = video;
@@ -171,6 +174,7 @@ export default {
     closeVideo() {
       this.showVideo = false
     },
+    // 初始化视频播放器
     initDplayer() {
       let Dplayer_dom = this.$refs.Dplayer_dom;
       console.log(Dplayer_dom)
@@ -355,6 +359,7 @@ export default {
       })
     },
     initScrollDom() {
+      // 滚动到指定地方改变导航条类型
       this.$el.onscroll = () => {
         var h = document.documentElement.scrollTop || document.body.scrollTop || this.$el.scrollTop;
         var scrollHeight = this.$el.scrollHeight;
@@ -519,6 +524,7 @@ export default {
           margin: -260px -55%;
           z-index: 10;
           background-repeat: no-repeat;
+          /*高斯模糊*/
           -webkit-filter: blur(40px);
           -moz-filter: blur(40px);
           -ms-filter: blur(40px);
@@ -531,6 +537,7 @@ export default {
   .page_bd {
     padding-top: 140px;
     .content {
+      padding: 0 10px;
       max-width: 1200px;
       margin: auto;
       .player_box {
@@ -623,16 +630,6 @@ export default {
   }
 }
 
-
-
-
-
-
-
-
-
-
-
 /* 大屏幕（大桌面显示器，大于等于 1200px） */
 
 @media (max-width: @screen_lg_min) {
@@ -640,16 +637,6 @@ export default {
     .page_bd {}
   }
 }
-
-
-
-
-
-
-
-
-
-
 
 /* 中等屏幕（桌面显示器，大于等于 992px） */
 
@@ -659,36 +646,44 @@ export default {
   }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-/* 小屏幕（平板，大于等于 768px） */
+/* 小屏幕（手机，大于等于 768px） */
 
 @media (max-width: @screen_sm_min) {
   .page_wrap {
-    .page_bd {}
+      .page_hd {
+        .media_info_wrp {
+          .media_info {
+            max-width:100%;
+            .info_box {
+              display: block;
+              .info_img {
+                .pos_img {
+                  margin: auto;
+                }
+              }
+              .info_text {
+                margin-top: 70px;
+                padding-left: 20px;
+                color: #434343;
+                .en_title {
+                  color: #434343;
+                }
+              .title {
+                  white-space: normal;
+                  .media_tags {
+                    margin-left: 0;
+                    .tag{
+                      border: 1px solid #2d2828;
+                    }
+                  }
+                }
+              }
+            }
+        }
+      }
+    }
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
 /* 小屏幕（手机，大于等于 640px） */
 
 @media (max-width: @screen_mi_min) {

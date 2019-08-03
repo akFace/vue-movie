@@ -27,9 +27,11 @@ module.exports = {
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
+    // 本地代理跨域请求
     proxyTable: {
         '/api': {
             // target: 'https://www.ifilm.ltd',
+            // 时光网api
             target: 'http://m.mtime.cn/Service/callback.mi',
             changeOrigin: true,
             pathRewrite: {

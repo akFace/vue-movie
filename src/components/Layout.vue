@@ -1,5 +1,12 @@
+<!-- 
+ 整个页面的统一布局，包含了一些通用布局：
+  1、头部导航条
+  2、底部的tabbar
+  3、侧边抽屉菜单
+-->
 <template>
   <div class="container slim_scrollbar">
+    <!-- 头部导航条 -->
     <div class="header_wrap">
       <slot name="header">
         <template>
@@ -17,6 +24,7 @@
         </template>
       </slot>
     </div>
+    <!-- 侧边抽屉菜单 -->
     <div class="side" v-if="has_menu && layout_type">
       <mu-drawer :docked="docked" :open="open" @close="openMenu()">
         <div class="img_box" :style="`background-image: url(${bg})`">
@@ -28,9 +36,13 @@
         </mu-list>
       </mu-drawer>
     </div>
+
+    <!-- 内容区域使用了slot插槽，以便将正文内容插入其中 -->
     <div class="content_wrap">
       <slot></slot>
     </div>
+
+    <!-- 底部的tabbar -->
     <div class="footer_wrap" v-if="has_footer && !layout_type">
       <template>
         <mu-paper>
@@ -48,7 +60,6 @@
 </template>
 <script>
 let _self;
-import Layout from '@/components/Layout';
 import Store from 'storejs'
 import bg from '../assets/images/bg.png'
 
@@ -81,21 +92,26 @@ export default {
     };
   },
   props: {
+    // 导航条标题
     title: {
       type: String,
       default: '',
     },
+    // 是否显示菜单
     has_menu: {
       type: Boolean,
       default: true,
     },
+    // 是否显示分享按钮
     has_share: {
       type: Boolean,
       default: true,
     },
+    // 左边返回按钮函数
     leftAction: {
       type: Function,
     },
+    // 是否显示底部tabbar
     has_footer: {
       type: Boolean,
       default: true,
@@ -109,9 +125,9 @@ export default {
     // this.setStatusBar();
   },
   activated() {
-    this.setActiveNav();
-    this.getModSwitch();
-    this.setStatusBar();
+    this.setActiveNav(); // 设置激活的tabbar
+    this.getModSwitch(); // 设置侧边栏模式还是tabbar模式
+    this.setStatusBar(); // 设置导航条颜色
   },
   methods: {
     openMenu() {
@@ -157,6 +173,7 @@ export default {
       if (theme === 'teal') {
         theme_color = '#009688'
       }
+      // cordova 插件，设置状态栏颜色
       document.addEventListener("deviceready", () => {
         console.log('设备已就绪');
         StatusBar.backgroundColorByHexString(theme_color);

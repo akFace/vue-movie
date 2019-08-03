@@ -1,4 +1,8 @@
+<!-- 
+ 首页
+-->
 <template>
+    <!-- 使用了Layout组件 -->
     <Layout :has_share="false" title="综合">
         <div class="page_wrap">
             <div class="page_bd">
@@ -12,6 +16,7 @@
                                 </mu-list-item>
                             </mu-list>
                         </div>
+                        <!-- 渲染列表通用电影卡片 -->
                         <MediaCard :media="movies.ms"></MediaCard>
                     </div>
                     <div class="list">
@@ -22,6 +27,7 @@
                                 </mu-list-item>
                             </mu-list>
                         </div>
+                        <!-- 渲染列表通用电影卡片 -->
                         <MediaCard :media="tvs"></MediaCard>
                     </div>
                 </div>

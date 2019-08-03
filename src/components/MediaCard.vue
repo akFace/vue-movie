@@ -1,3 +1,6 @@
+<!-- 
+ 列表通用电影卡片
+-->
 <template>
     <div class="card_wrap">
         <div class="item" v-for="media in media" :key="media.id" @click="jumpDetail(media.id)">
