@@ -23,8 +23,8 @@
                 <div class="en_title">{{movie.titleEn}}</div>
                 <div class="type_tag">
                   <span>{{movie.runTime}}</span>
-                  <span>{{movie.release.date}} </span>
-                  <span>{{movie.release.location}}上映 - </span>
+                  <span v-if="movie.release">{{movie.release.date}} </span>
+                  <span v-if="movie.release">{{movie.release.location}}上映 - </span>
                   <span v-if="movie.is3D">3D</span>
                   <span v-if="!movie.is3D">2D</span>
                   <span v-if="movie.isIMAX">/ IMAX</span>
