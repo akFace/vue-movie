@@ -86,7 +86,7 @@ export default {
             this.$store.dispatch('getSearchVoice', params).then(function(response) {
                 let res = response.data;
                 if (response.ok && response.status === 200) {
-                    res = JSON.parse(res);
+                    res && res.movies && res.movies.length ? res = res : res = JSON.parse(res);
                     _self.loading = 'loaded';
                     for(let item of res.movies) {
                         item.title = item.name;
