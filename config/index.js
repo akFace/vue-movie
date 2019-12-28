@@ -32,7 +32,7 @@ module.exports = {
         '/api': {
             // target: 'https://www.ifilm.ltd',
             // 时光网api
-            target: 'http://m.mtime.cn/Service/callback.mi',
+            target: 'https://m.mtime.cn/Service/callback.mi',
             changeOrigin: true,
             pathRewrite: {
                 '^/api': '',

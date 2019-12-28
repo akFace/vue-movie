@@ -181,7 +181,7 @@ export default {
       this.Dplayer = new DPlayer({
         element: Dplayer_dom,
         video: {
-          url: _self.current_video.url,
+          url: 'https://iptv-org.github.io/iptv/index.m3u',
           // pic: _self.movie.cover,
           autoplay: true,
           lang: 'zh',
@@ -206,11 +206,12 @@ export default {
     getMovieDetail() {
       let params = {};
       params.movieId = this.$route.params.movie_id;
-      params.ts = '201851015581118117';
+      params.ts = new Date().getTime();
       params.locationId = this.city.id;
       this.loading.movie = 'loading';
       this.$store.dispatch('getMovieDetail', params).then(function(response) {
         let res = response.data;
+        console.log(res)
         res && res.videoId ? res = res : res = JSON.parse(res);
         // console.log(res)
         if (response.ok && response.status === 200) {
@@ -233,7 +234,7 @@ export default {
     getHotLongComments() {
       let params = {};
       params.movieId = this.$route.params.movie_id;
-      params.ts = '201851015581118117';
+      params.ts = new Date().getTime();
       params.pageIndex = this.pageIndex || 1;
       this.$store.dispatch('getHotLongComments', params).then((response) => {
         let res = response.data;
@@ -251,7 +252,7 @@ export default {
     getMovieComments() {
       let params = {};
       params.movieId = this.$route.params.movie_id;
-      params.ts = '201851015581118117';
+      params.ts = new Date().getTime();
       params.pageIndex = this.pageIndex || 1;
       this.loading.comments = 'loading';
       this.$store.dispatch('getMovieComments', params).then(function(response) {

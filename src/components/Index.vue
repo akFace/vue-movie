@@ -62,7 +62,7 @@ export default {
     methods: {
         getLocationMovies() {
             let params = {};
-            params.ts = '201851015581118117';
+            params.ts = new Date().getTime();
             params.locationId = this.city.id;
             this.loading = 'loading';
             this.$store.dispatch('getLocationMovies', params).then((response) => {
@@ -86,7 +86,7 @@ export default {
         },
         getComingNewList() {
             let params = {};
-            params.ts = '201851015581118117';
+            params.ts = new Date().getTime();
             params.locationId = this.city.id;
             this.$store.dispatch('getComingNewList', params).then((response) => {
                 let res = response.data;

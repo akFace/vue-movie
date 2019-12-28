@@ -28,6 +28,10 @@
     <img src="https://raw.githubusercontent.com/kang558/vue-movie/master/screenshot/04.png" width="400">
 </figure>
 
+<figure class="center">
+    <img src="https://raw.githubusercontent.com/kang558/vue-movie/master/screenshot/20191228121453.png" width="400">
+</figure>
+
 #### PC端效果
 <figure class="center">
     <img src="https://raw.githubusercontent.com/kang558/vue-movie/master/screenshot/pc1.png">
