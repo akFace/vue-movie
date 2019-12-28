@@ -181,7 +181,7 @@ export default {
       this.Dplayer = new DPlayer({
         element: Dplayer_dom,
         video: {
-          url: 'https://iptv-org.github.io/iptv/index.m3u',
+          url: _self.current_video.url,
           // pic: _self.movie.cover,
           autoplay: true,
           lang: 'zh',

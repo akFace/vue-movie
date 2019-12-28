@@ -45,7 +45,7 @@ export default {
         getComingNewList() {
             let params = {};
             params.pageIndex = this.pageIndex || 1;
-            params.ts = '201851015581118117';
+            params.ts = new Date().getTime();
             params.locationId = this.city.id;
             this.loading = 'loading';
             this.$store.dispatch('getComingNewList', params).then(function(response) {
