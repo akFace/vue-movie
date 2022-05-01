@@ -3,7 +3,7 @@
 -->
 <template>
     <div class="card_wrap">
-        <div class="item" v-for="media in media" :key="media.id" @click="jumpDetail(media.id)">
+        <div class="item" v-for="media in media" :key="media.movieId" @click="jumpDetail(media.movieId)">
             <mu-card>
                 <mu-card-media>
                     <div class="default_bg">
@@ -48,6 +48,7 @@ export default {
     padding: 0;
     margin: auto;
     .item {
+        text-align: center;
         position: relative;
         display: inline-block;
         margin: 0 2px;

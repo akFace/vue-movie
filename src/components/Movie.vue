@@ -51,14 +51,13 @@ export default {
             params.locationId = this.city.id;
             this.loading = 'loading';
             this.$store.dispatch('getLocationMovies', params).then((response) => {
-                let res = response.data;
+                let res = response.data.data;
                 if (response.ok && response.status === 200) {
                     this.loading = 'loaded';
-                    for(let item of res.ms) {
-                        item.title = item.tCn;
-                        item.image = item.img;
+                    for(let item of res.moviecomings) {
+                        item.image = item.imgUrl;
                     }
-                    this.films = res.ms
+                    this.films = res.moviecomings
                     
                 } else {
                     this.loading = 'error';
@@ -111,9 +110,6 @@ export default {
         padding-top: @nav_bar/3;
         .content {
             position: relative;
-            .list {
-                text-align: center;
-            }
         }
     }
 }

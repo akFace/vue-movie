@@ -29,15 +29,15 @@ module.exports = {
     assetsPublicPath: '/',
     // 本地代理跨域请求
     proxyTable: {
-        '/api': {
-            // target: 'https://www.ifilm.ltd',
-            // 时光网api
-            target: 'https://m.mtime.cn/Service/callback.mi',
-            changeOrigin: true,
-            pathRewrite: {
-                '^/api': '',
-            }
-        },
+      '/api': {
+        // target: 'https://www.ifilm.ltd',
+        // 时光网api
+        target: 'http://front-gateway.mtime.com',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': '',
+        }
+      },
     },
     // CSS Sourcemaps off by default because relative paths are "buggy"
     // with this option, according to the CSS-Loader README

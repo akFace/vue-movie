@@ -22,7 +22,7 @@
                     <div class="list">
                         <div class="title">
                             <mu-list class="mulist">
-                                <mu-list-item :title="`即将上映${movies.totalComingMovie}部`" to="tv">
+                                <mu-list-item :title="`即将上映${totalComingMovie}部`" to="tv">
                                     <mu-icon slot="right" value="keyboard_arrow_right" />
                                 </mu-list-item>
                             </mu-list>
@@ -49,6 +49,7 @@ export default {
             page: 1,
             refreshing: false,
             trigger: null,
+            totalComingMovie: 0
         };
     },
     created() {
@@ -66,15 +67,16 @@ export default {
             params.locationId = this.city.id;
             this.loading = 'loading';
             this.$store.dispatch('getLocationMovies', params).then((response) => {
-                let res = response.data;
+                console.log(response);
+                let res = response.data.data;
+                console.log(res);
                 if (response.ok && response.status === 200) {
                     this.loading = 'loaded';
                     this.movies = res;
-                    this.movies.total = res.ms.length;
-                    this.movies.ms = res.ms.slice(0, 9);
+                    this.movies.total = res.totalMovieComings;
+                    this.movies.ms = res.moviecomings.slice(0, 10);
                     for(let item of this.movies.ms) {
-                        item.title = item.tCn;
-                        item.image = item.img;
+                        item.image = item.imgUrl;
                     }
                 } else {
                     this.loading = 'error';
@@ -89,9 +91,14 @@ export default {
             params.ts = new Date().getTime();
             params.locationId = this.city.id;
             this.$store.dispatch('getComingNewList', params).then((response) => {
-                let res = response.data;
+                let res = response.data.data;
                 if (response.ok && response.status === 200) {
-                    this.tvs = res.moviecomings.slice(0, 9);
+                    for(let item of res.movies) {
+                        item.image = item.img;
+                        item.title = item.movieTitle;
+                    }
+                    this.tvs = res.movies.slice(0, 10);
+                    this.totalComingMovie = res.totalCount
                     // this.movies.ms = res.ms.slice(0, 9);
                 } 
 
@@ -154,9 +161,6 @@ export default {
         }
         .content {
             position: relative;
-            .list {
-                text-align: center;
-            }
         }
         .more {
             padding-bottom: 30px;

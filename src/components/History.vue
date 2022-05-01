@@ -7,10 +7,10 @@
             <div class="page_bd">
                 <h5 class="title">仅显示最近浏览的30条数据</h5>
                 <div class="list">
-                    <div class="item" v-for="movie in list" @click="jumpDetail(movie.movie_id)" :key="movie.id">
-                        <div class="img" :style="`background-image: url(${movie.image})`"></div>
+                    <div class="item" v-for="movie in list" @click="jumpDetail(movie.movieId)" :key="movie.id">
+                        <div class="img" :style="`background-image: url(${movie.img})`"></div>
                         <div class="box">
-                            <div class="title">{{ movie.titleCn }}</div>
+                            <div class="title">{{ movie.name }}</div>
                         </div>
                     </div>
                 </div>

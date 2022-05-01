@@ -45,22 +45,27 @@ export default {
         getComingNewList() {
             let params = {};
             params.pageIndex = this.pageIndex || 1;
+            params.pageSize = 20
             params.ts = new Date().getTime();
             params.locationId = this.city.id;
             this.loading = 'loading';
             this.$store.dispatch('getComingNewList', params).then(function(response) {
-                let res = response.data;
+                let res = response.data.data;
                 if (response.ok && response.status === 200) {
+                    for(let item of res.movies) {
+                        item.image = item.img;
+                        item.title = item.movieTitle;
+                    }
                     _self.loading = 'loaded';
                     if (params.pageIndex > 1) {
-                        if (!res.moviecomings.length) {
+                        if (!res.hasMore) {
                             _self.loading = 'nomore';
                         } else {
-                            _self.tv_list.push(...res.moviecomings);
+                            _self.tv_list.push(...res.movies);
                         }
                     } else {
-                        _self.tv_list = res.moviecomings;
-                        if (!res.moviecomings.length) {
+                        _self.tv_list = res.movies;
+                        if (!res.movies.length) {
                             _self.loading = 'empty';
                         }
                     }
@@ -78,6 +83,9 @@ export default {
             this.getComingNewList();
         },
         loadMore() {
+            if ( this.loading != 'loaded') {
+                return
+            }
             this.pageIndex++;
             this.getComingNewList();
         },
@@ -108,14 +116,10 @@ export default {
     width: 100%;
     height: 100%;
     background: #f5f5f5;
-    .page_hd {}
     .page_bd {
         padding-top: @nav_bar/3;
         .content {
             position: relative;
-            .list {
-                text-align: center;
-            }
         }
     }
 }

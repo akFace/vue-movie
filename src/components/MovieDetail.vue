@@ -11,7 +11,7 @@
             <div class="info_box">
               <div class="info_img">
                 <!-- 海报 -->
-                <img :src="movie.image" class="pos_img">
+                <img :src="movie.bigImage" class="pos_img">
               </div>
               <div class="info_text">
                 <div class="title">
@@ -23,8 +23,7 @@
                 <div class="en_title">{{movie.titleEn}}</div>
                 <div class="type_tag">
                   <span>{{movie.runTime}}</span>
-                  <span v-if="movie.release">{{movie.release.date}} </span>
-                  <span v-if="movie.release">{{movie.release.location}}上映 - </span>
+                  <span v-if="movie.releaseDateNew">{{movie.releaseDateNew}}上映 - {{movie.releaseArea}}</span>
                   <span v-if="movie.is3D">3D</span>
                   <span v-if="!movie.is3D">2D</span>
                   <span v-if="movie.isIMAX">/ IMAX</span>
@@ -35,22 +34,22 @@
                   <div class="list">
                     <div class="item">
                       <div class="title">导演：</div>
-                      <div class="name"><span v-for="director in movie.directors">{{director}}</span></div>
+                      <div class="name"><span v-for="director in movie.directors">{{director.name}}</span></div>
                     </div>
                     <div class="item">
                       <div class="title">演员：</div>
-                      <div class="name"><span v-for="actor in movie.actors">{{actor}}、</span>...</div>
+                      <div class="name"><span v-for="actor in movie.actors">{{actor.name}}、</span>...</div>
                     </div>
                   </div>
-                  <div class="intro_text">剧情：{{movie.content}}</div>
+                  <div class="intro_text">剧情：{{movie.story}}</div>
                 </div>
-                <div class="rating" v-if="movie.rating > 0"><span class="value">{{movie.rating}}</span>分</div>
+                <div class="rating" v-if="movie.rating > 0"><span class="value">{{movie.overallRating}}</span>分</div>
               </div>
             </div>
           </div>
           <div class="media_bg">
             <!-- 高斯模糊背景图 -->
-            <div class="pos_bg" :style="`background-image: url(${movie.image})`"></div>
+            <div class="pos_bg" :style="`background-image: url(${movie.bigImage})`"></div>
           </div>
         </div>
       </div>
@@ -59,8 +58,8 @@
           <div class="previve">
             <div class="title">预告片：</div>
             <div class="video_list">
-              <a href="javascript:;" v-for="video in movie.videos" style="display: inline-block">
-              <img :src="video.image" @click="changeSource(video)">
+              <a href="javascript:;" v-for="video in movie.videos" style="margin-bottom: 20px;display: inline-block">
+              <img :src="video.img" @click="changeSource(video)">
               <p>{{video.title}}</p>
             </a>
             </div>
@@ -79,18 +78,21 @@
                   <div class="text">{{comment.content}}</div>
                 </div>
               </div>
+              <div class="loading_box" if="!hot_comments_list.length">
+                <span>暂无数据~~</span>
+              </div>
               <div class="showmore" @click="jumpAllHotComments" style="text-align: right;cursor: pointer;padding: 10px;color: blue;"><span>查看全部{{totalCount}}条精选影评&gt;&gt;</span></div>
             </div>
             <div class="title">网友短评：</div>
             <div class="list">
               <div class="item" v-for="comment in comments_list">
-                <div class="header_img" :style="`background-image: url(${comment.caimg})`"></div>
+                <div class="header_img" :style="`background-image: url(${comment.userImage})`"></div>
                 <div class="comment">
                   <div class="nickname">
-                    <span class="name">{{comment.ca}}</span>
-                    <mu-badge :content="`${comment.cr}分`" primary slot="after" />
+                    <span class="name">{{comment.nickname}}</span>
+                    <mu-badge :content="`${comment.rating}分`" primary slot="after" />
                   </div>
-                  <div class="text">{{comment.ce}}</div>
+                  <div class="text">{{comment.content}}</div>
                 </div>
               </div>
               <div class="loading_box">
@@ -206,18 +208,17 @@ export default {
     getMovieDetail() {
       let params = {};
       params.movieId = this.$route.params.movie_id;
-      params.ts = new Date().getTime();
+      params.tt = new Date().getTime();
       params.locationId = this.city.id;
       this.loading.movie = 'loading';
       this.$store.dispatch('getMovieDetail', params).then(function(response) {
-        let res = response.data;
+        let res = response.data.data;
         console.log(res)
-        res && res.videoId ? res = res : res = JSON.parse(res);
         // console.log(res)
         if (response.ok && response.status === 200) {
           _self.loading.movie = 'loaded';
           res.movie_id = params.movieId;
-          _self.movie = res;
+          _self.movie = res.basic;
           _self.getHotLongComments();
           _self.getMovieComments();
           _self.$nextTick(() => {
@@ -237,9 +238,9 @@ export default {
       params.ts = new Date().getTime();
       params.pageIndex = this.pageIndex || 1;
       this.$store.dispatch('getHotLongComments', params).then((response) => {
-        let res = response.data;
+        let res = response.data.data;
         if (response.ok && response.status === 200) {
-          this.hot_comments_list = res.comments;
+          this.hot_comments_list = res.list;
           this.totalCount = res.totalCount;
         } else {
           _self.loading.movie = 'loaded';
@@ -256,20 +257,18 @@ export default {
       params.pageIndex = this.pageIndex || 1;
       this.loading.comments = 'loading';
       this.$store.dispatch('getMovieComments', params).then(function(response) {
-        let res = response.data;
-        // res = JSON.parse(res);
-        res && res.cts ? res = res : res = JSON.parse(res);
+        let res = response.data.data;
         if (response.ok && response.status === 200) {
           _self.loading.comments = 'loaded';
           if (params.pageIndex > 1) {
-            if (!res.cts.length) {
+            if (!res.list.length) {
               _self.loading.comments = 'nomore';
             } else {
-              _self.comments_list.push(...res.cts);
+              _self.comments_list.push(...res.list);
             }
           } else {
-            _self.comments_list = res.cts;
-            if (!res.cts.length) {
+            _self.comments_list = res.list;
+            if (!res.list.length) {
               _self.loading.comments = 'empty';
             }
           }
@@ -293,7 +292,7 @@ export default {
       arr = Store.get('view_list');
       if (arr) {
         arr = arr.filter((item) => {
-          return item.movie_id != this.$route.params.movie_id;
+          return item.movieId != this.$route.params.movie_id;
         })
         arr.unshift(this.movie);
         // 仅仅保留最近浏览的30个数据
@@ -311,7 +310,7 @@ export default {
       arr = Store.get('favorite_list');
       if (arr) {
         arr = arr.filter((item) => {
-          return item.movie_id != this.$route.params.movie_id;
+          return item.movieId != this.$route.params.movie_id;
         })
         arr.unshift(this.movie);
       } else {
@@ -425,6 +424,7 @@ export default {
           }
 
           .info_text {
+            max-width: 900px;
             padding-left: 20px;
             .title {
               padding-top: 5px;
